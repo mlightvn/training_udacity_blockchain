@@ -1,0 +1,29 @@
+{
+  "name": "project_1",
+  "version": "1.0.0",
+  "description": "This project creates a Blockchain application to store data into the blocks",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon app.js"
+  },
+  "author": "Udacity - jose.morales@udacity.com",
+  "license": "ISC",
+  "dependencies": {
+    "bip32": "^3.0.1",
+    "bitcoinjs-lib": "^4.0.5",
+    "bitcoinjs-message": "^2.0.0",
+    "bitcore-lib": "^8.25.28",
+    "body-parser": "^1.18.3",
+    "clone-deep": "^4.0.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^3.1.9-1",
+    "ecpair": "^2.0.1",
+    "express": "^4.16.4",
+    "hex2ascii": "0.0.3",
+    "lodash": "^4.17.21",
+    "morgan": "^1.9.1",
+    "node-gyp": "^9.0.0",
+    "nodemon": "^2.0.16",
+    "tiny-secp256k1": "^2.2.1"
+  }
+}
