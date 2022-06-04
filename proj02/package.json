@@ -4,15 +4,15 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-      "serve": "nodemon app.js"
+        "serve": "nodemon app.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "ethereumjs-tx": "^2.1.2",
-      "nodemon": "^2.0.16",
-      "web3": "^1.7.3"
+        "dotnet": "^1.1.4",
+        "ethereumjs-tx": "^2.1.2",
+        "nodemon": "^2.0.16",
+        "web3": "^1.7.3"
     }
-  }
-  
+}
