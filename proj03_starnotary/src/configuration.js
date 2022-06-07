@@ -1,0 +1,18 @@
+module.exports = {
+    web3Provider: {
+      // The endpoint that the server will listen on
+      endpoint: "http://localhost:7545",
+      endpoint_ws: "ws://localhost:7545",
+    },
+    // The private key of the sender
+    privateKey: "",
+    // The address of the sender
+    sendingAddress: "",
+    // The address of the receiver
+    receivingAddress: "",
+
+    metamaskAddress: '',
+
+    nonceUInt: 1,
+    weiToEtherUnit: 1000000000000000000, // 1,000,000,000,000,000,000 = 1 Ether
+}

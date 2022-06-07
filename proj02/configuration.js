@@ -13,7 +13,7 @@ module.exports = {
     // The address of the receiver
     receivingAddress: process.env.RECEIVER_ADDRESS,
 
-    metamaskAddress: process.env.METAMASK_ADDRESS, // '0x27b5419afb9c3D99A262046383e083Ae7d81900a'
+    metamaskAddress: process.env.METAMASK_ADDRESS, // '0x0000000000000000000000000000000000000000'
 
     nonceUInt: 1,
     weiToEtherUnit: 1000000000000000000, // 1,000,000,000,000,000,000 = 1 Ether
