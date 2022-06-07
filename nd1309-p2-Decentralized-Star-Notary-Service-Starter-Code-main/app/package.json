@@ -5,12 +5,20 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "build-dev": "webpack --config webpack.config.js",
+    "dev": "webpack-dev-server",
+    "get_chain_id": "nodemon index.js"
   },
   "dependencies": {
     "copy-webpack-plugin": "^11.0.0",
+    "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.0.1",
+    "fs": "^0.0.1-security",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "nodemon": "^2.0.16",
     "openzeppelin-solidity": "2.3",
+    "stream": "^0.0.2",
+    "stream-http": "^3.2.0",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.7.3",
     "webpack": "^5.73.0",
