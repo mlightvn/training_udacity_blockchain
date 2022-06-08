@@ -1,8 +1,8 @@
 module.exports = {
     web3Provider: {
-      // The endpoint that the server will listen on
-      endpoint: "http://localhost:7545",
-      endpoint_ws: "ws://localhost:7545",
+        // The endpoint that the server will listen on
+        endpoint: "http://localhost:7545",
+        endpoint_ws: "ws://127.0.0.1:7545",
     },
     // The private key of the sender
     privateKey: "",
