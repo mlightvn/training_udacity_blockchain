@@ -70,59 +70,38 @@ const App = {
   lookUp: async function (){
     let lookidEl = document.getElementById("lookid");
     let lookid = parseInt(lookidEl.value);
+
+    if(!lookid){
+      this.setStatusSearch("Star ID is required.");
+      return;
+    }else if(lookid <= 0){
+      this.setStatusSearch("Star ID must be greater or equal 0.");
+      return;
+    }
     // let lookid = (lookidEl.value);
 
     if(this.meta){
-      // const { lookup } = this.meta.methods;
-      // let starInfo = await lookup(lookid).call({from: this.account});
-      // let starOwner = starInfo[0];
-      // let starId = starInfo[1];
-      // let starName = starInfo[2];
-      // let starDec = starInfo[3];
-      // let starMag = starInfo[4];
-      // let starRA = starInfo[5];
-      // let starDecimal = starInfo[6];
-      // let starStory = starInfo[7];
-      // let starOwnerEl = document.getElementById("starOwner");
-      // let starIdEl = document.getElementById("starId");
-      // let starNameEl = document.getElementById("starName");
-      // let starDecEl = document.getElementById("starDec");
-      // let starMagEl = document.getElementById("starMag");
-      // let starRAEl = document.getElementById("starRA");
-      // let starDecimalEl = document.getElementById("starDecimal");
-      // let starStoryEl = document.getElementById("starStory");
-      // starOwnerEl.innerHTML = starOwner;
-      // starIdEl.innerHTML = starId;
-      // starNameEl.innerHTML = starName;
-      // starDecEl.innerHTML = starDec;
-      // starMagEl.innerHTML = starMag;
-      // starRAEl.innerHTML = starRA;
-      // starDecimalEl.innerHTML = starDecimal;
-      // starStoryEl.innerHTML = starStory;
-
-      let { lookUptokenIdToStarInfo, getStar } = this.meta.methods;
+      let { lookUptokenIdToStarInfo } = this.meta.methods;
       // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html?highlight=method#id26
 
-      // let starName = await lookUptokenIdToStarInfo(lookid).call({from: this.account})
-      // let starName = await lookUptokenIdToStarInfo(lookid).call({from: this.account}).then(function(result, error){
-      //   console.log({error, result});
-      // });
+      let starName = await lookUptokenIdToStarInfo(lookid).call()
 
-
-      let starName = await lookUptokenIdToStarInfo(lookid)
-      .call({from: this.account})
-      .then(function(result, error){
-        console.log({error, result});
-      })
-      .catch(function(error){
-        console.log({error});
-      }
-      );
+      // let starName = null;
+      // await lookUptokenIdToStarInfo(lookid)
+      // .call()
+      // .then(function(result, error){
+      //   // console.log({error, result});
+      //   starName = result;
+      // })
+      // .catch(function(error){
+      //   console.log({error});
+      // }
+      // );
 
       
       console.log({starName, from: this.account, lookid});
       if(starName){
-        // this.setStatusSearch("Found: " + starName);
+        this.setStatusSearch(starName);
       }else{
         this.setStatusSearch("Not found.");
       }
