@@ -22,7 +22,7 @@ const App = {
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
-      console.log({account: this.account})
+      // console.log({account: this.account})
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
@@ -63,7 +63,7 @@ const App = {
     const name = document.getElementById("starName").value;
     const id = document.getElementById("starId").value;
     await createStar(name, id).send({from: this.account});
-    App.setStatusAdd("New Star Owner is " + this.account + ".");
+    App.setStatusAdd("New Star Owner is " + this.account);
   },
 
   // Implement Task 4 Modify the front end of the DAPP
@@ -75,7 +75,7 @@ const App = {
       this.setStatusSearch("Star ID is required.");
       return;
     }else if(lookid <= 0){
-      this.setStatusSearch("Star ID must be greater or equal 0.");
+      this.setStatusSearch("Star ID must be greater than 0.");
       return;
     }
     // let lookid = (lookidEl.value);
@@ -98,13 +98,52 @@ const App = {
       // }
       // );
 
-      
-      console.log({starName, from: this.account, lookid});
+
+      console.log({starName, lookid});
       if(starName){
         this.setStatusSearch(starName);
       }else{
         this.setStatusSearch("Not found.");
       }
+  
+    }
+  },
+
+  // Implement Task 1
+  ExchangeStars: async function (){
+    let star1Id = document.getElementById("exchange\\[star1\\]");
+    let star2Id = document.getElementById("exchange\\[star2\\]");
+    let star1IdValue = parseInt(star1Id.value);
+    let star2IdValue = parseInt(star2Id.value);
+
+    if(!star1IdValue){
+      this.setStatusSearch("Star 1 ID is required.");
+      return;
+    }
+    if(star1IdValue <= 0){
+      this.setStatusSearch("Star 1 ID must be greater than 0.");
+      return;
+    }
+    if(!star2IdValue){
+      this.setStatusSearch("Star 2 ID is required.");
+      return;
+    }
+    if(star2IdValue <= 0){
+      this.setStatusSearch("Star 2 ID must be greater than 0.");
+      return;
+    }
+
+    if(this.meta){
+      // let { exchangeStars } = this.meta.methods;
+
+      // let starName = await exchangeStars(lookid).send({from: this.account})
+
+      // console.log({starName, lookid});
+      // if(starName){
+      //   this.setStatusSearch(starName);
+      // }else{
+      //   this.setStatusSearch("Not found.");
+      // }
   
     }
   },

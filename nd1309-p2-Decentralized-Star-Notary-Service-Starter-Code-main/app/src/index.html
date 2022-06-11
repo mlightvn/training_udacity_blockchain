@@ -36,7 +36,8 @@
                 <input type="number" class="form-control" id="starId">
               </div>
               <div class="input-group">
-                <span id="status_add"></span>
+                <div class="col-md-3">Added result:</div>
+                <div class="col"><span id="status_add"></span></div>
               </div>
             </div>
             <div class="card-footer">
@@ -56,39 +57,55 @@
                 <span class="input-group-text">Star ID</span>
                 <input type="number" class="form-control"  id="lookid">
               </div>
-      
+
               <div class="input-group">
                 <div class="col-md-3">Search result:</div>
                 <div class="col"><span id="status_search"></span></div>
+              </div>
+              <div class="input-group">
+                <div class="col-md-3">Owner address:</div>
+                <div class="col"><span id="status[star1][address]"></span></div>
               </div>
             </div>
             <div class="card-footer">
               <button class="btn btn-primary" onclick="App.lookUp()">Look up</button>
             </div>
           </div>
+
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h3>Exchange stars</h3>
+            </div>
+            <div class="card-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text">Star ID 1</span>
+                <input type="number" class="form-control"  id="exchange[star1]">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Star ID 2</span>
+                <input type="number" class="form-control"  id="exchange[star2]">
+              </div>
+      
+              <div class="input-group">
+                <div class="col-md-3">Exchanged result:</div>
+                <div class="col"><span id="status_exchange"></span></div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-primary" onclick="App.ExchangeStars()">Exchange Stars</button>
+            </div>
+          </div>
       
         </div>
       </div>
-    </div>
 
-<!-- 
-    <br>
-      <h1>Create a Star</h1>
-      <br><label for="starName">Star Name:</label><input type="text" id="starName"></input>
-      <br><label for="starId">Star ID:</label><input type="text" id="starId"></input>
-      <br><br><button id="createStar" onclick="App.createStar()">Create Star</button>
-      <br>
-      <hr>
-      <br>
-      <h1>Look up a Star</h1>
-      <br><label for="name">Star ID:</label><input type="text" id="lookid"></input>
-      <br><br><button onclick="App.lookUp()">Look Up a Star</button>
-      <hr>
-      <br>
-      <span id="status"></span>
-      <br>
--->
 
+    </div>      
 
     <script src="index.js"></script>
   </body>
