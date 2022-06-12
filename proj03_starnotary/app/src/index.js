@@ -1,4 +1,6 @@
 let configuration = require('../configuration.js');
+import copy from 'copy-to-clipboard';
+
 import Web3 from "web3";
 import starNotaryArtifact from "../../build/contracts/StarNotary.json";
 
@@ -48,10 +50,11 @@ const App = {
     status.innerHTML = message;
   },
 
-  // setStatusSearch: function(message) {
-  //   const status = document.getElementById("status_search");
-  //   status.innerHTML = message;
-  // },
+  copyFromElementId: function(elementId) {
+    const el = document.getElementById(elementId);
+    let value = el.value;
+    copy(value);
+  },
 
   setStatusSearch1: function(star, message = null) {
     const starElMessage = document.getElementById("status[search][star1][message]");
@@ -90,6 +93,11 @@ const App = {
   },
   setStatusExchange: function(message) {
     const starElMessage = document.getElementById("status[exchange][message]");
+    starElMessage.innerHTML = message;
+  },
+
+  setStatusTransfer: function(message) {
+    const starElMessage = document.getElementById("status[transfer][message]");
     starElMessage.innerHTML = message;
   },
 
@@ -247,6 +255,54 @@ const App = {
 
       } catch (error) {
         this.setStatusExchange(error.message);
+      }
+
+    }
+  },
+
+  // Implement Task 1: transferStar
+  TransferStar: async function (){
+    let transferInput = {
+      to_address: document.getElementById("transfer[input][to_address]").value,
+      starId: document.getElementById("transfer[input][star_id]").value,
+    }
+
+    if(!transferInput.to_address){
+      this.setStatusTransfer("TO ADDRESS is required.");
+      return;
+    }
+    if(!transferInput.starId){
+      this.setStatusTransfer("Star ID is required.");
+      return;
+    }
+    if(transferInput.starId <= 0){
+      this.setStatusTransfer("Star ID must be greater than 0.");
+      return;
+    }
+
+    if(this.meta){
+      let { transferStar } = this.meta.methods;
+
+      try {
+        await transferStar(transferInput.to_address, transferInput.starId)
+        .send({from: this.account})
+        .then(function(result, error){
+          console.log({then: true, error, result});
+          if(error === undefined){
+            setStatusTransfer("Done");
+          }else{
+            setStatusTransfer(error.message);
+          }
+        })
+        .catch(function(error){
+          console.log({catch: true, error});
+          let message = error.message || error.stack;
+          setStatusTransfer(message);
+        }
+        );
+
+      } catch (error) {
+        this.setStatusTransfer(error.message);
       }
 
     }

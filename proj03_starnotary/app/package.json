@@ -16,6 +16,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "copy-to-clipboard": "^3.3.1",
     "dotenv": "^16.0.1",
     "ethereum-cryptography": "^1.0.3",
     "ethereumjs-util": "^7.1.5",
