@@ -88,8 +88,8 @@ it('lets 2 users exchange stars', async() => {
     let star2 = 8;
     let star1NameBefore = 'star1';
     let star2NameBefore = 'star2';
-    let star1NameAfter = "";
-    let star2NameAfter = "";
+    // let star1NameAfter = "";
+    // let star2NameAfter = "";
 
     // 1. create 2 Stars with different tokenId
     await instance.createStar(star1NameBefore, star1, {from: user1});
@@ -115,19 +115,23 @@ it('lets a user transfer a star', async() => {
 
 it('lookUptokenIdToStarInfo test', async() => {
     let instance = await StarNotary.deployed();
-    let user = accounts[3];
-    let starId = 6;
-    let starName = 'star for searching';
+    let starInput = {
+        id: 6,
+        name: 'star for searching',
+        owner: accounts[3],
+    }
     // let starPrice = web3.utils.toWei(".01", "ether");
     // let balance = web3.utils.toWei(".05", "ether");
 
     // 1. create a Star with different tokenId
-    await instance.createStar(starName, starId, {from: user});
+    await instance.createStar(starInput.name, starInput.id, {from: starInput.owner});
 
     // 2. Call your method lookUptokenIdToStarInfo
-    let starNameSearch = await instance.lookUptokenIdToStarInfo(starId);
+    let starOutput = await instance.lookUptokenIdToStarInfo(starInput.id);
 
     // 3. Verify if you Star name is the same
-    assert.equal(starNameSearch, starName);
+    assert.equal(starInput.id, starOutput.tokenId);
+    assert.equal(starInput.name, starOutput.name);
+    assert.equal(starInput.owner, starOutput.owner);
 
 });

@@ -48,9 +48,49 @@ const App = {
     status.innerHTML = message;
   },
 
-  setStatusSearch: function(message) {
-    const status = document.getElementById("status_search");
-    status.innerHTML = message;
+  // setStatusSearch: function(message) {
+  //   const status = document.getElementById("status_search");
+  //   status.innerHTML = message;
+  // },
+
+  setStatusSearch1: function(star, message = null) {
+    const starElMessage = document.getElementById("status[search][star1][message]");
+    // const starElId = document.getElementById("status[search][star1][id]");
+    const starElName = document.getElementById("status[search][star1][name]");
+    const starElOwner = document.getElementById("status[search][star1][owner]");
+    if(star){
+      starElMessage.innerHTML = message || "";
+      // starElId.value = star.tokenId;
+      starElName.value = star.name;
+      starElOwner.value = star.owner;
+    }else{
+      starElMessage.innerHTML = message || "Not found";
+      // starElId.value = "";
+      starElName.value = "";
+      starElOwner.value = "";
+    }
+  },
+
+  setStatusSearch2: function(star, message = null) {
+    const starElMessage = document.getElementById("status[search][star2][message]");
+    // const starElId = document.getElementById("status[search][star2][id]");
+    const starElName = document.getElementById("status[search][star2][name]");
+    const starElOwner = document.getElementById("status[search][star2][owner]");
+    if(star){
+      starElMessage.innerHTML = message || "";
+      // starElId.value = star.tokenId;
+      starElName.value = star.name;
+      starElOwner.value = star.owner;
+    }else{
+      starElMessage.innerHTML = message || "Not found";
+      // starElId.value = "";
+      starElName.value = "";
+      starElOwner.value = "";
+    }
+  },
+  setStatusExchange: function(message) {
+    const starElMessage = document.getElementById("status[exchange][message]");
+    starElMessage.innerHTML = message;
   },
 
   setChainId: function(chainId) {
@@ -67,15 +107,28 @@ const App = {
   },
 
   // Implement Task 4 Modify the front end of the DAPP
-  lookUp: async function (){
-    let lookidEl = document.getElementById("lookid");
+  lookUp: async function (starIndex){
+    switch(starIndex){
+      case 1:
+        await App.lookUp1();
+        break;
+      case 2:
+        await App.lookUp2();
+        break;
+      default:
+        break;
+    }
+  },
+
+  lookUp1: async function (){
+    let lookidEl = document.getElementById("search[star1][id]");
     let lookid = parseInt(lookidEl.value);
 
     if(!lookid){
-      this.setStatusSearch("Star ID is required.");
+      this.setStatusSearch(null, "Star ID is required.");
       return;
     }else if(lookid <= 0){
-      this.setStatusSearch("Star ID must be greater than 0.");
+      this.setStatusSearch(null, "Star ID must be greater than 0.");
       return;
     }
     // let lookid = (lookidEl.value);
@@ -84,67 +137,118 @@ const App = {
       let { lookUptokenIdToStarInfo } = this.meta.methods;
       // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html?highlight=method#id26
 
-      let starName = await lookUptokenIdToStarInfo(lookid).call()
+      // let searchObj = await lookUptokenIdToStarInfo(lookid).call()
 
-      // let starName = null;
-      // await lookUptokenIdToStarInfo(lookid)
-      // .call()
-      // .then(function(result, error){
-      //   // console.log({error, result});
-      //   starName = result;
-      // })
-      // .catch(function(error){
-      //   console.log({error});
-      // }
-      // );
-
-
-      console.log({starName, lookid});
-      if(starName){
-        this.setStatusSearch(starName);
-      }else{
-        this.setStatusSearch("Not found.");
+      let searchObj = null;
+      await lookUptokenIdToStarInfo(lookid)
+      .call()
+      .then(function(result, error){
+        console.log({then: true, error, result});
+        searchObj = result;
+      })
+      .catch(function(error){
+        console.log({catch: true, error});
       }
+      );
+
+
+      console.log({searchObj, lookid});
+      this.setStatusSearch1(searchObj);
+  
+    }
+  },
+
+  lookUp2: async function (){
+    let lookidEl = document.getElementById("search[star2][id]");
+    let lookid = parseInt(lookidEl.value);
+
+    if(!lookid){
+      this.setStatusSearch2(null, "Star ID is required.");
+      return;
+    }else if(lookid <= 0){
+      this.setStatusSearch2(null, "Star ID must be greater than 0.");
+      return;
+    }
+    // let lookid = (lookidEl.value);
+
+    if(this.meta){
+      let { lookUptokenIdToStarInfo } = this.meta.methods;
+      // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-contract.html?highlight=method#id26
+
+      // let searchObj = await lookUptokenIdToStarInfo(lookid).call()
+
+      let searchObj = null;
+      await lookUptokenIdToStarInfo(lookid)
+      .call()
+      .then(function(result, error){
+        console.log({then: true, error, result});
+        searchObj = result;
+      })
+      .catch(function(error){
+        console.log({catch: true, error});
+      }
+      );
+
+
+      console.log({searchObj, lookid});
+      this.setStatusSearch2(searchObj);
   
     }
   },
 
   // Implement Task 1
   ExchangeStars: async function (){
-    let star1Id = document.getElementById("exchange\\[star1\\]");
-    let star2Id = document.getElementById("exchange\\[star2\\]");
+    let star1Id = document.getElementById("exchange[star1][id]");
+    let star2Id = document.getElementById("exchange[star2][id]");
     let star1IdValue = parseInt(star1Id.value);
     let star2IdValue = parseInt(star2Id.value);
 
     if(!star1IdValue){
-      this.setStatusSearch("Star 1 ID is required.");
+      this.setStatusExchange("Star 1 ID is required.");
       return;
     }
     if(star1IdValue <= 0){
-      this.setStatusSearch("Star 1 ID must be greater than 0.");
+      this.setStatusExchange("Star 1 ID must be greater than 0.");
       return;
     }
     if(!star2IdValue){
-      this.setStatusSearch("Star 2 ID is required.");
+      this.setStatusExchange("Star 2 ID is required.");
       return;
     }
     if(star2IdValue <= 0){
-      this.setStatusSearch("Star 2 ID must be greater than 0.");
+      this.setStatusExchange("Star 2 ID must be greater than 0.");
+      return;
+    }
+    if(star1IdValue === star2IdValue){
+      this.setStatusExchange("Star 1 ID and Star 2 ID must be different.");
       return;
     }
 
     if(this.meta){
-      // let { exchangeStars } = this.meta.methods;
+      let { exchangeStars } = this.meta.methods;
 
-      // let starName = await exchangeStars(lookid).send({from: this.account})
+      try {
+        await exchangeStars(star1IdValue, star2IdValue)
+        .send({from: this.account})
+        .then(function(result, error){
+          console.log({then: true, error, result});
+          if(error === undefined){
+            setStatusExchange("Done");
+          }else{
+            setStatusExchange(error.message);
+          }
+        })
+        .catch(function(error){
+          console.log({catch: true, error});
+          let message = error.message || error.stack;
+          setStatusExchange(message);
+        }
+        );
 
-      // console.log({starName, lookid});
-      // if(starName){
-      //   this.setStatusSearch(starName);
-      // }else{
-      //   this.setStatusSearch("Not found.");
-      // }
-  
+      } catch (error) {
+        this.setStatusExchange(error.message);
+      }
+
     }
   },
 
