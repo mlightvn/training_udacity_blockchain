@@ -234,6 +234,7 @@ const App = {
 
     if(this.meta){
       let { exchangeStars } = this.meta.methods;
+      let self = this;
 
       try {
         await exchangeStars(star1IdValue, star2IdValue)
@@ -241,15 +242,15 @@ const App = {
         .then(function(result, error){
           console.log({then: true, error, result});
           if(error === undefined){
-            setStatusExchange("Done");
+            self.setStatusExchange("Done");
           }else{
-            setStatusExchange(error.message);
+            self.setStatusExchange(error.message);
           }
         })
         .catch(function(error){
           console.log({catch: true, error});
           let message = error.message || error.stack;
-          setStatusExchange(message);
+          self.setStatusExchange(message);
         }
         );
 
@@ -282,6 +283,7 @@ const App = {
 
     if(this.meta){
       let { transferStar } = this.meta.methods;
+      let self = this;
 
       try {
         await transferStar(transferInput.to_address, transferInput.starId)
@@ -289,15 +291,15 @@ const App = {
         .then(function(result, error){
           console.log({then: true, error, result});
           if(error === undefined){
-            setStatusTransfer("Done");
+            self.setStatusTransfer("Done");
           }else{
-            setStatusTransfer(error.message);
+            self.setStatusTransfer(error.message);
           }
         })
         .catch(function(error){
           console.log({catch: true, error});
           let message = error.message || error.stack;
-          setStatusTransfer(message);
+          self.setStatusTransfer(message);
         }
         );
 
