@@ -142,7 +142,7 @@ it('lookUptokenIdToStarInfo test', async() => {
 
     // 3. Verify if you Star name is the same
     assert.equal(starInput.id, starOutput.tokenId);
-    assert.equal(starInput.name, starOutput.name);
+    assert.equal(starInput.name, starOutput.starName);
     assert.equal(starInput.owner, starOutput.owner);
 
 });

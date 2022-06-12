@@ -64,7 +64,7 @@ const App = {
     if(star){
       starElMessage.innerHTML = message || "";
       // starElId.value = star.tokenId;
-      starElName.value = star.name;
+      starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
       starElMessage.innerHTML = message || "Not found";
@@ -82,7 +82,7 @@ const App = {
     if(star){
       starElMessage.innerHTML = message || "";
       // starElId.value = star.tokenId;
-      starElName.value = star.name;
+      starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
       starElMessage.innerHTML = message || "Not found";

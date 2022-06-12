@@ -5,6 +5,19 @@ import "../app/node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.
 
 // StarNotary Contract declaration inheritance the ERC721 openzeppelin implementation
 contract StarNotary is ERC721 {
+    string public name;
+    string public symbol;
+
+    // uint8 public decimals;
+    // uint256 public totalSupply;
+
+    constructor() public {
+        name = "Nguyen Nam";
+        symbol = "NAM";
+        // decimals = 18;
+        // totalSupply = 1000000;
+    }
+
     // Star data
     struct Star {
         string name;
@@ -60,7 +73,7 @@ contract StarNotary is ERC721 {
         view
         returns (
             uint256 tokenId,
-            string memory name,
+            string memory starName,
             address owner
         )
     {
