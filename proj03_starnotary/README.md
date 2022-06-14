@@ -27,3 +27,9 @@ https://rinkeby.etherscan.io/address/0x27b5419afb9c3d99a262046383e083ae7d81900a
 
 This is the second account for transferring, exchanging
 https://rinkeby.etherscan.io/address/0x0a0b017db9b5b306d219eb8e5f0f83d9235c9bc0
+
+
+## Screen shots
+All in this folder
+"result/20220615_test on rinkeby"
+
