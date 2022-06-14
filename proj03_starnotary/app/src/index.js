@@ -68,9 +68,9 @@ const App = {
     const starElName = document.getElementById("status[search][star1][name]");
     const starElOwner = document.getElementById("status[search][star1][owner]");
     if(star){
-      // starElMessage.innerHTML = message || "";
-      snackbar.show(message);
-      // starElId.value = star.tokenId;
+      if(message){
+        snackbar.show(message);
+      }
       starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
@@ -88,9 +88,9 @@ const App = {
     const starElName = document.getElementById("status[search][star2][name]");
     const starElOwner = document.getElementById("status[search][star2][owner]");
     if(star){
-      // starElMessage.innerHTML = message || "";
-      snackbar.show(message);
-      // starElId.value = star.tokenId;
+      if(message){
+        snackbar.show(message);
+      }
       starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
@@ -104,14 +104,18 @@ const App = {
   setStatusExchange: function(message) {
     // const starElMessage = document.getElementById("status[exchange][message]");
     // starElMessage.innerHTML = message;
-    snackbar.show(message);
-  },
+    if(message){
+      snackbar.show(message);
+    }
+},
 
   setStatusTransfer: function(message) {
     // const starElMessage = document.getElementById("status[transfer][message]");
     // starElMessage.innerHTML = message;
-    snackbar.show(message);
-  },
+    if(message){
+      snackbar.show(message);
+    }
+},
 
   setChainId: function(chainId) {
     let chainIdEl = document.getElementById("chain_id");
@@ -333,14 +337,14 @@ const App = {
 window.App = App;
 
 window.addEventListener("load", async function() {
-  console.log({endpoint_ws:configuration.web3Provider.endpoint_ws})
+  // console.log({endpoint_ws:configuration.web3Provider.endpoint_ws})
 
   if (window.ethereum) {
     // use MetaMask's provider
     App.web3 = new Web3(window.ethereum);
     await window.ethereum.enable(); // get permission to access accounts
   } else {
-    console.warn(`No web3 detected. Falling back to ${configuration.web3Provider.endpoint}. You should remove this fallback when you deploy live`,);
+    console.warn(`No web3 detected. Falling back to ${configuration.web3Provider.endpoint_ws}. You should remove this fallback when you deploy live`,);
     // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
     App.web3 = new Web3(new Web3.providers.HttpProvider(configuration.web3Provider.endpoint_ws),);
   }
