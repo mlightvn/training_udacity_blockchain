@@ -1,4 +1,5 @@
-let configuration = require('../configuration.js');
+let configuration = require('../configuration.js.dev');
+const snackbar = require('snackbar');
 import copy from 'copy-to-clipboard';
 
 import Web3 from "web3";
@@ -14,7 +15,10 @@ const App = {
 
     try {
       // get contract instance
-      const networkId = await web3.eth.net.getId();
+      // console.log({web3_net: web3.eth.net})
+      // const networkId = await web3.eth.net.getId();
+      const networkId = 5777;
+      // console.log({networkId})
       const deployedNetwork = starNotaryArtifact.networks[networkId];
       this.meta = new web3.eth.Contract(
         starNotaryArtifact.abi,
@@ -131,12 +135,17 @@ const App = {
   lookUp1: async function (){
     let lookidEl = document.getElementById("search[star1][id]");
     let lookid = parseInt(lookidEl.value);
+    let message = "";
 
     if(!lookid){
-      this.setStatusSearch(null, "Star ID is required.");
+      message = "Please enter a star id";
+      this.setStatusSearch1(null, message);
+      snackbar.show(message);
       return;
     }else if(lookid <= 0){
-      this.setStatusSearch(null, "Star ID must be greater than 0.");
+      message = "Star id must be greater than 0";
+      this.setStatusSearch1(null, message);
+      snackbar.show(message);
       return;
     }
     // let lookid = (lookidEl.value);
@@ -169,12 +178,17 @@ const App = {
   lookUp2: async function (){
     let lookidEl = document.getElementById("search[star2][id]");
     let lookid = parseInt(lookidEl.value);
+    let message = "";
 
     if(!lookid){
-      this.setStatusSearch2(null, "Star ID is required.");
+      message = "Please enter a star id";
+      this.setStatusSearch2(null, message);
+      snackbar.show(message);
       return;
     }else if(lookid <= 0){
-      this.setStatusSearch2(null, "Star ID must be greater than 0.");
+      message = "Star id must be greater than 0";
+      this.setStatusSearch2(null, message);
+      snackbar.show(message);
       return;
     }
     // let lookid = (lookidEl.value);
@@ -315,6 +329,9 @@ const App = {
 window.App = App;
 
 window.addEventListener("load", async function() {
+  // console.log({endpoint_ws:configuration.web3Provider.endpoint_ws})
+  console.log({ENDPOINT:process.env.ENDPOINT})
+
   if (window.ethereum) {
     // use MetaMask's provider
     App.web3 = new Web3(window.ethereum);
@@ -322,7 +339,7 @@ window.addEventListener("load", async function() {
   } else {
     console.warn(`No web3 detected. Falling back to ${configuration.web3Provider.endpoint}. You should remove this fallback when you deploy live`,);
     // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-    App.web3 = new Web3(new Web3.providers.HttpProvider(configuration.web3Provider.endpoint),);
+    App.web3 = new Web3(new Web3.providers.HttpProvider(configuration.web3Provider.endpoint_ws),);
   }
 
   App.start();

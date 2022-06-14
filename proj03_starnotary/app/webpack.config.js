@@ -10,6 +10,7 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([{ from: "./src/favicon.ico", to: "favicon.ico" }]),
+        new CopyWebpackPlugin([{ from: "./src/snackbar.min.css", to: "snackbar.min.css" }]),
         new CopyWebpackPlugin([{ from: "./src/index.html", to: "index.html" }]),
         new CopyWebpackPlugin([{ from: "./src/jIndex.js", to: "jIndex.js" }]),
     ],

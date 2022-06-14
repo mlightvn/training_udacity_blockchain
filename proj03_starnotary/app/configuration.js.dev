@@ -1,8 +1,14 @@
+// require('dotenv').config();
+
 module.exports = {
   web3Provider: {
       // The endpoint that the server will listen on
-      endpoint: "http://localhost:7545",
-      endpoint_ws: "ws://127.0.0.1:7545",
+      // endpoint: "http://localhost:7545",
+      // endpoint_ws: "ws://127.0.0.1:7545",
+
+      // endpoint: process.env.ENDPOINT,
+      // endpoint_ws: process.env.ENDPOINT_WS,
+  
   },
   // The private key of the sender
   privateKey: "",
