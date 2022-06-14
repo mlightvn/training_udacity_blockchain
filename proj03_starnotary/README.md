@@ -22,8 +22,8 @@ OpenZeppelin
   "openzeppelin-solidity": "2.3",
 
 ## Others
-My Address
+This is main account for testing
 https://rinkeby.etherscan.io/address/0x27b5419afb9c3d99a262046383e083ae7d81900a
 
-New contract was created
-https://rinkeby.etherscan.io/tx/0xe72e95b4859ecd1dec892e5230136626384d90413b44c3e0770b1156c9e40d83
+This is the second account for transferring, exchanging
+https://rinkeby.etherscan.io/address/0x0a0b017db9b5b306d219eb8e5f0f83d9235c9bc0
