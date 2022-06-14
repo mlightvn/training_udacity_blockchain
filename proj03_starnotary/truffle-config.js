@@ -62,7 +62,6 @@ module.exports = {
       //   return new HDWalletProvider(
       //     privateKeys.split(','), // Array of account private keys
       //     // `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`, // Url to an Ethereum Node
-      //     // `https://rinkeby.infura.io/v3/8dd0537da0ee464d9faca4f6b7eee21f`,
       //     process.env.ENDPOINT,
       //   )
       // },
