@@ -1,6 +1,8 @@
 require('dotenv').config();
-const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
+const HDWalletProvider = require('truffle-hdwallet-provider');
+// const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
 const privateKeys = process.env.PRIVATE_KEYS || ""
+// const ETH_SEED_PHRASE= process.env.ETH_SEED_PHRASE || ""
 
 /**
  * Use this file to configure your truffle project. It's seeded with some
@@ -26,12 +28,6 @@ const privateKeys = process.env.PRIVATE_KEYS || ""
  *
  */
 
-// const HDWallet = require('truffle-hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
-
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -50,23 +46,30 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //   host: "127.0.0.1",     // Localhost (default: none)
-    //   port: 7545,            // Standard Ethereum port (default: none)
-    //   network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "5777",       // Any network (default: none)
+    },
 
     rinkeby: {
-      provider: function() {
-        return new HDWalletProvider(
-          privateKeys.split(','), // Array of account private keys
-          // `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`, // Url to an Ethereum Node
-          process.env.ENDPOINT,
-        )
-      },
+      networkCheckTimeout: 10000, // ms
+      provider: () => new HDWalletProvider(
+        process.env.ETH_SEED_PHRASE,
+        process.env.ENDPOINT,
+      ),
+      // provider: function() {
+      //   return new HDWalletProvider(
+      //     privateKeys.split(','), // Array of account private keys
+      //     // `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`, // Url to an Ethereum Node
+      //     // `https://rinkeby.infura.io/v3/8dd0537da0ee464d9faca4f6b7eee21f`,
+      //     process.env.ENDPOINT,
+      //   )
+      // },
       gas: 5000000,
       gasPrice: 25000000000,
-      network_id: "*",
+      network_id: 4,
+      confirmations: 2,
     },
 
     // Another network with more advanced options...

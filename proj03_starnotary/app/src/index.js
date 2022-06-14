@@ -1,4 +1,4 @@
-let configuration = require('../configuration.js.dev');
+let configuration = require('../configuration.js');
 const snackbar = require('snackbar');
 import copy from 'copy-to-clipboard';
 
@@ -16,8 +16,8 @@ const App = {
     try {
       // get contract instance
       // console.log({web3_net: web3.eth.net})
-      // const networkId = await web3.eth.net.getId();
-      const networkId = 5777;
+      const networkId = await web3.eth.net.getId();
+      // const networkId = 5777;
       // console.log({networkId})
       const deployedNetwork = starNotaryArtifact.networks[networkId];
       this.meta = new web3.eth.Contract(
@@ -52,26 +52,30 @@ const App = {
   setStatusAdd: function(message) {
     const status = document.getElementById("status_add");
     status.innerHTML = message;
+    snackbar.show(message);
   },
 
   copyFromElementId: function(elementId) {
     const el = document.getElementById(elementId);
     let value = el.value;
     copy(value);
+    snackbar.show("copied to clipboard");
   },
 
   setStatusSearch1: function(star, message = null) {
-    const starElMessage = document.getElementById("status[search][star1][message]");
+    // const starElMessage = document.getElementById("status[search][star1][message]");
     // const starElId = document.getElementById("status[search][star1][id]");
     const starElName = document.getElementById("status[search][star1][name]");
     const starElOwner = document.getElementById("status[search][star1][owner]");
     if(star){
-      starElMessage.innerHTML = message || "";
+      // starElMessage.innerHTML = message || "";
+      snackbar.show(message);
       // starElId.value = star.tokenId;
       starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
-      starElMessage.innerHTML = message || "Not found";
+      // starElMessage.innerHTML = message || "Not found";
+      snackbar.show(message || "Not found");
       // starElId.value = "";
       starElName.value = "";
       starElOwner.value = "";
@@ -79,30 +83,34 @@ const App = {
   },
 
   setStatusSearch2: function(star, message = null) {
-    const starElMessage = document.getElementById("status[search][star2][message]");
+    // const starElMessage = document.getElementById("status[search][star2][message]");
     // const starElId = document.getElementById("status[search][star2][id]");
     const starElName = document.getElementById("status[search][star2][name]");
     const starElOwner = document.getElementById("status[search][star2][owner]");
     if(star){
-      starElMessage.innerHTML = message || "";
+      // starElMessage.innerHTML = message || "";
+      snackbar.show(message);
       // starElId.value = star.tokenId;
       starElName.value = star.starName;
       starElOwner.value = star.owner;
     }else{
-      starElMessage.innerHTML = message || "Not found";
+      // starElMessage.innerHTML = message || "Not found";
+      snackbar.show(message || "Not found");
       // starElId.value = "";
       starElName.value = "";
       starElOwner.value = "";
     }
   },
   setStatusExchange: function(message) {
-    const starElMessage = document.getElementById("status[exchange][message]");
-    starElMessage.innerHTML = message;
+    // const starElMessage = document.getElementById("status[exchange][message]");
+    // starElMessage.innerHTML = message;
+    snackbar.show(message);
   },
 
   setStatusTransfer: function(message) {
-    const starElMessage = document.getElementById("status[transfer][message]");
-    starElMessage.innerHTML = message;
+    // const starElMessage = document.getElementById("status[transfer][message]");
+    // starElMessage.innerHTML = message;
+    snackbar.show(message);
   },
 
   setChainId: function(chainId) {
@@ -140,12 +148,10 @@ const App = {
     if(!lookid){
       message = "Please enter a star id";
       this.setStatusSearch1(null, message);
-      snackbar.show(message);
       return;
     }else if(lookid <= 0){
       message = "Star id must be greater than 0";
       this.setStatusSearch1(null, message);
-      snackbar.show(message);
       return;
     }
     // let lookid = (lookidEl.value);
@@ -183,12 +189,10 @@ const App = {
     if(!lookid){
       message = "Please enter a star id";
       this.setStatusSearch2(null, message);
-      snackbar.show(message);
       return;
     }else if(lookid <= 0){
       message = "Star id must be greater than 0";
       this.setStatusSearch2(null, message);
-      snackbar.show(message);
       return;
     }
     // let lookid = (lookidEl.value);
@@ -329,8 +333,7 @@ const App = {
 window.App = App;
 
 window.addEventListener("load", async function() {
-  // console.log({endpoint_ws:configuration.web3Provider.endpoint_ws})
-  console.log({ENDPOINT:process.env.ENDPOINT})
+  console.log({endpoint_ws:configuration.web3Provider.endpoint_ws})
 
   if (window.ethereum) {
     // use MetaMask's provider
