@@ -1,0 +1,18 @@
+# Language: dockerfile
+# Path: dockerfile
+# syntax=docker/dockerfile:1
+
+FROM node:16.15.1
+# ENV NODE_ENV=production
+ENV NODE_ENV=development
+# RUN apk add --no-cache python3 g++ make
+WORKDIR /project
+
+RUN alias ll='ls -laF'
+
+# COPY ["package.json", "package-lock.json*", "./"]
+
+# RUN npm install --production
+# COPY . .
+# CMD [ "node", "server.js" ]
+EXPOSE 3000

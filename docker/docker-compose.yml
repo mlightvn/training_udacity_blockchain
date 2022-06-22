@@ -1,0 +1,14 @@
+version: "3"
+services:
+    training_blockchain_udacity:
+        container_name: 'blockchain'
+        image: "training/blockchain/udacity"
+        build: node
+    #     restart: always
+        tty: true
+        working_dir: '/project'
+        volumes:
+            - .:/project
+        ports:
+            - "8080:3000"
+
