@@ -1,16 +1,22 @@
 {
-  "name": "supply-chain-E",
+  "name": "coffee-supply-chain",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "lite-server"
   },
   "keywords": [],
   "author": "pk <pkrasam@gmail.com> (https://ipfs.infura.io/ipfs/QmSXiR9Khm3yo1J67nUopvVBxFJ8YGN2fUGZ34Etr3m92x/)",
   "license": "MIT",
   "devDependencies": {
-    "lite-server": "2.4.0"
+    "lite-server": "^2.4.0"
+  },
+  "dependencies": {
+    "copy-to-clipboard": "^3.3.1",
+    "devenv": "^1.0.1",
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.18",
+    "snackbar": "^1.1.0"
   }
 }
