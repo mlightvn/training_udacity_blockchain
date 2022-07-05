@@ -1,4 +1,4 @@
-pragma solidity ^0.5.16;
+pragma solidity >=0.5.16;
 
 // Define a contract 'Supplychain'
 contract SupplyChain {
@@ -139,6 +139,7 @@ contract SupplyChain {
     // and set 'sku' to 1
     // and set 'upc' to 1
     constructor() public payable {
+        // owner = payable(msg.sender);
         owner = msg.sender;
         sku = 1;
         upc = 1;

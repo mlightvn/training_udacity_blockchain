@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 App = {
     web3Provider: null,
     contracts: {},
