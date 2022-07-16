@@ -64,13 +64,16 @@ contract SupplyChain {
 
     // Define a modifer that checks to see if msg.sender == owner of the contract
     modifier onlyOwner() {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Only the owner can perform this action.");
         _;
     }
 
     // Define a modifer that verifies the Caller
     modifier verifyCaller(address _address) {
-        require(msg.sender == _address);
+        require(
+            msg.sender == _address,
+            "Only the caller can perform this action"
+        );
         _;
     }
 
@@ -102,49 +105,73 @@ contract SupplyChain {
 
     // Define a modifier that checks if an item.state of a upc is Harvested
     modifier harvested(uint256 _upc) {
-        require(items[_upc].itemState == State.Harvested);
+        require(
+            items[_upc].itemState == State.Harvested,
+            "Item is not in the Harvested state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Processed
     modifier processed(uint256 _upc) {
-        require(items[_upc].itemState == State.Processed);
+        require(
+            items[_upc].itemState == State.Processed,
+            "Item is not in the Processed state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Packed
     modifier packed(uint256 _upc) {
-        require(items[_upc].itemState == State.Packed);
+        require(
+            items[_upc].itemState == State.Packed,
+            "Item is not in the Packed state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is ForSale
     modifier forSale(uint256 _upc) {
-        require(items[_upc].itemState == State.ForSale);
+        require(
+            items[_upc].itemState == State.ForSale,
+            "Item is not in the ForSale state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Sold
     modifier sold(uint256 _upc) {
-        require(items[_upc].itemState == State.Sold);
+        require(
+            items[_upc].itemState == State.Sold,
+            "Item is not in the Sold state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Shipped
     modifier shipped(uint256 _upc) {
-        require(items[_upc].itemState == State.Shipped);
+        require(
+            items[_upc].itemState == State.Shipped,
+            "Item is not in the Shipped state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Received
     modifier received(uint256 _upc) {
-        require(items[_upc].itemState == State.Received);
+        require(
+            items[_upc].itemState == State.Received,
+            "Item is not in the Received state"
+        );
         _;
     }
 
     // Define a modifier that checks if an item.state of a upc is Purchased
     modifier purchased(uint256 _upc) {
-        require(items[_upc].itemState == State.Purchased);
+        require(
+            items[_upc].itemState == State.Purchased,
+            "Item is not in the Purchased state"
+        );
         _;
     }
 
@@ -209,7 +236,7 @@ contract SupplyChain {
     function processItem(uint256 _upc)
         public
         harvested(_upc)
-        verifyCaller(msg.sender)
+        verifyCaller(items[_upc].originFarmerID)
     {
         // Update the appropriate fields
         items[_upc].itemState = State.Processed;
@@ -224,7 +251,7 @@ contract SupplyChain {
     function packItem(uint256 _upc)
         public
         processed(_upc)
-        verifyCaller(msg.sender)
+        verifyCaller(items[_upc].originFarmerID)
     {
         // Update the appropriate fields
         items[_upc].itemState = State.Packed;
@@ -239,7 +266,7 @@ contract SupplyChain {
     function sellItem(uint256 _upc, uint256 _price)
         public
         packed(_upc)
-        verifyCaller(msg.sender)
+        verifyCaller(items[_upc].originFarmerID)
     {
         // Update the appropriate fields
         items[_upc].itemState = State.ForSale;
@@ -260,7 +287,7 @@ contract SupplyChain {
         public
         payable
         forSale(_upc)
-        paidEnough(items[_upc].productPrice)
+        paidEnough(msg.value)
         checkValue(_upc)
     {
         // Update the appropriate fields - ownerID, distributorID, itemState
@@ -280,7 +307,11 @@ contract SupplyChain {
 
     // Call modifier to check if upc has passed previous supply chain stage
     // Call modifier to verify caller of this function
-    function shipItem(uint256 _upc) public sold(_upc) verifyCaller(msg.sender) {
+    function shipItem(uint256 _upc)
+        public
+        sold(_upc)
+        verifyCaller(items[_upc].originFarmerID)
+    {
         // Update the appropriate fields
         items[_upc].itemState = State.Shipped;
         // Emit the appropriate event

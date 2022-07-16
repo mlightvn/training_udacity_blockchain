@@ -1,1 +1,2 @@
-npm run dev
+cd project
+npm run serve
