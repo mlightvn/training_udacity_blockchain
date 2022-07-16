@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Personal
 pragma solidity >=0.5.16;
 
 /// Provides basic authorization control
