@@ -208,7 +208,6 @@ contract SupplyChain {
     // Call modifier to verify caller of this function
     function processItem(uint256 _upc)
         public
-        payable
         harvested(_upc)
         verifyCaller(msg.sender)
     {
