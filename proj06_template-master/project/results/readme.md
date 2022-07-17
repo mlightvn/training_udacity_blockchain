@@ -43,3 +43,6 @@ Roles
 
 ※Other packages were installed, but I did not use in this project
 
+### Sequence
+
+<img src="../docs/sequence.png"/>
