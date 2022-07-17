@@ -36,6 +36,27 @@
             </div>
         </div>
         <div class=form-break></div>
+
+        <!-- 
+        <h2>Product Image</h2>
+        <div class="form-group">
+            <form action="/">
+                <fieldset>
+                    <legend>Upload photo</legend>
+                    <input type="file" name="photo" id="photo">
+                    <button type="button" onclick="upload()">Upload</button>
+                </fieldset>
+            </form>
+            </br>
+            </br>
+            <a id="img_url"></a>
+            </br>
+            </br>
+            <img id="img">
+        </div>
+        <div class=form-break></div>
+        -->
+
         <h2>Farm Details</h2>
         <div class="form-group">
             Farmer ID
@@ -55,6 +76,7 @@
             <br>
             <input type="text" id="originFarmLongitude" name="originFarmLongitude" value="106.62965"><br>
             <br>
+            <button class="btn-reset" visabled="false" id="button" type="button" data-id="0">Reset</button>
             <button class="btn-harvest" id="button" type="button" data-id="1">Harvest</button>
             <button class="btn-process" id="button" type="button" data-id="2">Process</button>
             <button class="btn-pack" id="button" type="button" data-id="3">Pack</button>
@@ -68,7 +90,7 @@
             <input type="text" id="productNotes" name="productNotes" value="Best beans for Espresso" size="100"><br>
             Product Price
             <br>
-            <input type="number" id="productPrice" name="productPrice" value="0.01" max="100" min="0.0001" style="width: 90%;">ETH<br>
+            <input type="number" id="productPrice" name="productPrice" value="0.001" max="100" min="0.0001" style="width: 90%;">ETH<br>
             Distributor ID
             <br>
             <input type="text" id="distributorID" name="distributorID" value="0x661B2B02f88e003449bC2e36554d8B45e0f81591"
@@ -109,7 +131,16 @@
 
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
+    <script src="js/configuration.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- 
+    <script src="https://wzrd.in/standalone/buffer"></script>
+    <script src="https://unpkg.com/ipfs-api@9.0.0/dist/index.js"
+    integrity="sha384-5bXRcW9kyxxnSMbOoHzraqa7Z0PQWIao+cgeg327zit1hz5LZCEbIMx/LWKPReuB"
+    crossorigin="anonymous"></script>
+     -->
+
 </body>
 
 </html>

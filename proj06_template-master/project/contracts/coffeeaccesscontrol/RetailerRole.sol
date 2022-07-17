@@ -18,21 +18,34 @@ contract RetailerRole {
 
     // Define a modifier that checks to see if msg.sender has the appropriate role
     modifier onlyRetailer() {
+        require(isRetailer(msg.sender));
         _;
     }
 
     // Define a function 'isRetailer' to check this role
-    function isRetailer(address account) public view returns (bool) {}
+    function isRetailer(address account) public view returns (bool) {
+        return retailers.has(account);
+    }
 
     // Define a function 'addRetailer' that adds this role
-    function addRetailer(address account) public onlyRetailer {}
+    function addRetailer(address account) public onlyRetailer {
+        _addRetailer(account);
+    }
 
     // Define a function 'renounceRetailer' to renounce this role
-    function renounceRetailer() public {}
+    function renounceRetailer() public {
+        _removeRetailer(msg.sender);
+    }
 
     // Define an internal function '_addRetailer' to add this role, called by 'addRetailer'
-    function _addRetailer(address account) internal {}
+    function _addRetailer(address account) internal {
+        retailers.add(account);
+        emit Added(account);
+    }
 
     // Define an internal function '_removeRetailer' to remove this role, called by 'removeRetailer'
-    function _removeRetailer(address account) internal {}
+    function _removeRetailer(address account) internal {
+        retailers.remove(account);
+        emit Removed(account);
+    }
 }

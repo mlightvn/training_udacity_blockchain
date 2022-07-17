@@ -39,6 +39,10 @@ button {
     cursor: pointer;
 }
 
+.btn-reset{
+  background-color: #d44000;
+}
+
 .sell { 
   background-color: white;
   color: #D1C4E9;
@@ -69,4 +73,8 @@ button {
 
 .horizontal-rule {
   background-color:#BDBDBD;
+}
+
+[visabled="false"] {
+  display: none;
 }
