@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: Personal
 pragma solidity >=0.5.16;
 
+// import "../coffeeaccesscontrol/ConsumerRole.sol";
+// import "../coffeeaccesscontrol/DistributorRole.sol";
+// import "../coffeeaccesscontrol/FarmerRole.sol";
+// import "../coffeeaccesscontrol/RetailerRole.sol";
+
 // Define a contract 'Supplychain'
 contract SupplyChain {
     // Define 'owner'
@@ -342,6 +347,10 @@ contract SupplyChain {
         items[_upc].ownerID = msg.sender;
         items[_upc].consumerID = msg.sender;
         items[_upc].itemState = State.Purchased;
+
+        // ConsumerRole consumerRole = new ConsumerRole();
+        // consumerRole.addConsumer(msg.sender);
+
         // Emit the appropriate event
         emit Purchased(_upc);
     }
