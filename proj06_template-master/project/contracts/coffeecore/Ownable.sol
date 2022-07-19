@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Personal
-pragma solidity >=0.5.16;
+pragma solidity 0.5.16;
 
 /// Provides basic authorization control
 contract Ownable {
@@ -21,7 +21,7 @@ contract Ownable {
 
     /// Define a function modifier 'onlyOwner'
     modifier onlyOwner() {
-        require(isOwner());
+        require(isOwner(), "Only the owner can perform this action.");
         _;
     }
 
@@ -43,7 +43,10 @@ contract Ownable {
 
     /// Define an internal function to transfer ownership
     function _transferOwnership(address newOwner) internal {
-        require(newOwner != address(0));
+        require(
+            newOwner != address(0),
+            "Cannot transfer ownership to 0 address."
+        );
         emit TransferOwnership(origOwner, newOwner);
         origOwner = newOwner;
     }

@@ -1,26 +1,31 @@
-pragma solidity >=0.5.16;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 // Import the library 'Roles'
 import "./Roles.sol";
 
 // Define a contract 'DistributorRole' to manage this role - add, remove, check
 contract DistributorRole {
+    using Roles for Roles.Role;
+
     // Define 2 events, one for Adding, and other for Removing
     event Added(address indexed account);
     event Removed(address indexed account);
 
     // Define a struct 'distributors' by inheriting from 'Roles' library, struct Role
-    using Roles for Roles.Role;
     Roles.Role private distributors;
 
     // In the constructor make the address that deploys this contract the 1st distributor
     constructor() public {
-        addDistributor(msg.sender);
+        _addDistributor(msg.sender);
     }
 
     // Define a modifier that checks to see if msg.sender has the appropriate role
     modifier onlyDistributor() {
-        require(isDistributor(msg.sender));
+        require(
+            isDistributor(msg.sender),
+            "Only distributors can perform this action."
+        );
         _;
     }
 

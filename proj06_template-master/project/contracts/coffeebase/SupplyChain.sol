@@ -1,15 +1,23 @@
 // SPDX-License-Identifier: Personal
-pragma solidity >=0.5.16;
+pragma solidity 0.5.16;
 
-// import "../coffeeaccesscontrol/ConsumerRole.sol";
-// import "../coffeeaccesscontrol/DistributorRole.sol";
-// import "../coffeeaccesscontrol/FarmerRole.sol";
-// import "../coffeeaccesscontrol/RetailerRole.sol";
+import "../coffeecore/Ownable.sol";
+
+import "../coffeeaccesscontrol/ConsumerRole.sol";
+import "../coffeeaccesscontrol/DistributorRole.sol";
+import "../coffeeaccesscontrol/FarmerRole.sol";
+import "../coffeeaccesscontrol/RetailerRole.sol";
 
 // Define a contract 'Supplychain'
-contract SupplyChain {
+contract SupplyChain is
+    Ownable,
+    ConsumerRole,
+    DistributorRole,
+    FarmerRole,
+    RetailerRole
+{
     // Define 'owner'
-    address payable owner;
+    // address payable owner;
 
     // Define a variable called 'upc' for Universal Product Code (UPC)
     uint256 upc;
@@ -68,10 +76,10 @@ contract SupplyChain {
     event Purchased(uint256 upc);
 
     // Define a modifer that checks to see if msg.sender == owner of the contract
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can perform this action.");
-        _;
-    }
+    // modifier onlyOwner() {
+    //     require(msg.sender == owner, "Only the owner can perform this action.");
+    //     _;
+    // }
 
     // Define a modifer that verifies the Caller
     modifier verifyCaller(address _address) {
@@ -81,11 +89,6 @@ contract SupplyChain {
         );
         _;
     }
-
-    // modifier itemExist(uint256 _upc) {
-    //     require(items[_upc], "Input UPC does not exist in the items mapping");
-    //     _;
-    // }
 
     // Define a modifier that checks if the paid amount is sufficient to cover the price
     modifier paidEnough(uint256 _price) {
@@ -184,21 +187,19 @@ contract SupplyChain {
     // and set 'sku' to 1
     // and set 'upc' to 1
     constructor() public payable {
-        // owner = payable(msg.sender);
-        owner = msg.sender;
+        transferOwnership(msg.sender);
         sku = 1;
         upc = 1;
     }
 
     // Define a function 'kill' if required
     function kill() public {
-        if (msg.sender == owner) {
-            selfdestruct(owner);
-        }
+        renounceOwnership();
     }
 
     // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
     function harvestItem(
+        uint256 _sku,
         uint256 _upc,
         address payable _originFarmerID,
         string memory _originFarmName,
@@ -207,9 +208,12 @@ contract SupplyChain {
         string memory _originFarmLongitude,
         string memory _productNotes
     ) public {
+        sku = _sku;
+        upc = _upc;
+
         // Add the new item as part of Harvest
         Item memory item = Item(
-            sku,
+            _sku,
             _upc,
             msg.sender,
             _originFarmerID,
@@ -228,6 +232,8 @@ contract SupplyChain {
 
         items[_upc] = item;
 
+        addFarmer(_originFarmerID);
+
         // Increment sku
         sku++;
         // Emit the appropriate event
@@ -240,6 +246,7 @@ contract SupplyChain {
     // Call modifier to verify caller of this function
     function processItem(uint256 _upc)
         public
+        onlyFarmer
         harvested(_upc)
         verifyCaller(items[_upc].originFarmerID)
     {
@@ -255,6 +262,7 @@ contract SupplyChain {
     // Call modifier to verify caller of this function
     function packItem(uint256 _upc)
         public
+        onlyFarmer
         processed(_upc)
         verifyCaller(items[_upc].originFarmerID)
     {
@@ -270,6 +278,7 @@ contract SupplyChain {
     // Call modifier to verify caller of this function
     function sellItem(uint256 _upc, uint256 _price)
         public
+        onlyFarmer
         packed(_upc)
         verifyCaller(items[_upc].originFarmerID)
     {
@@ -303,6 +312,8 @@ contract SupplyChain {
         // Transfer money to farmer
         items[_upc].ownerID.transfer(msg.value);
 
+        addDistributor(msg.sender);
+
         // emit the appropriate event
         emit Sold(_upc);
     }
@@ -314,11 +325,15 @@ contract SupplyChain {
     // Call modifier to verify caller of this function
     function shipItem(uint256 _upc)
         public
+        onlyDistributor
         sold(_upc)
         verifyCaller(items[_upc].originFarmerID)
     {
         // Update the appropriate fields
         items[_upc].itemState = State.Shipped;
+
+        addRetailer(items[_upc].retailerID);
+
         // Emit the appropriate event
         emit Shipped(_upc);
     }
@@ -328,7 +343,7 @@ contract SupplyChain {
 
     // Call modifier to check if upc has passed previous supply chain stage
     // Access Control List enforced by calling Smart Contract / DApp
-    function receiveItem(uint256 _upc) public shipped(_upc) {
+    function receiveItem(uint256 _upc) public shipped(_upc) onlyRetailer {
         // Update the appropriate fields - ownerID, retailerID, itemState
         items[_upc].ownerID = msg.sender;
         items[_upc].retailerID = msg.sender;
@@ -348,8 +363,7 @@ contract SupplyChain {
         items[_upc].consumerID = msg.sender;
         items[_upc].itemState = State.Purchased;
 
-        // ConsumerRole consumerRole = new ConsumerRole();
-        // consumerRole.addConsumer(msg.sender);
+        addConsumer(msg.sender);
 
         // Emit the appropriate event
         emit Purchased(_upc);
@@ -359,6 +373,7 @@ contract SupplyChain {
     function fetchItemBufferOne(uint256 _upc)
         public
         view
+        onlyConsumer
         returns (
             uint256 itemSKU,
             uint256 itemUPC,
@@ -396,6 +411,7 @@ contract SupplyChain {
     function fetchItemBufferTwo(uint256 _upc)
         public
         view
+        onlyConsumer
         returns (
             uint256 itemSKU,
             uint256 itemUPC,

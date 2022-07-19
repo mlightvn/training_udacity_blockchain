@@ -1,4 +1,5 @@
-pragma solidity >=0.5.16;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 /**
  * @title Roles
@@ -13,8 +14,11 @@ library Roles {
      * @dev give an account access to this role
      */
     function add(Role storage role, address account) internal {
-        require(account != address(0));
-        require(!has(role, account));
+        require(account != address(0), "account cannot be the zero address");
+        require(
+            !has(role, account),
+            "account is already a member of this role"
+        );
 
         role.bearer[account] = true;
     }
@@ -23,8 +27,8 @@ library Roles {
      * @dev remove an account's access to this role
      */
     function remove(Role storage role, address account) internal {
-        require(account != address(0));
-        require(has(role, account));
+        require(account != address(0), "account cannot be the zero address");
+        require(has(role, account), "account is not a member of this role");
 
         role.bearer[account] = false;
     }
@@ -38,7 +42,7 @@ library Roles {
         view
         returns (bool)
     {
-        require(account != address(0));
+        require(account != address(0), "account cannot be the zero address");
         return role.bearer[account];
     }
 }

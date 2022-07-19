@@ -1,4 +1,5 @@
-pragma solidity >=0.5.16;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 // Import the library 'Roles'
 import "./Roles.sol";
@@ -14,11 +15,16 @@ contract RetailerRole {
     Roles.Role private retailers;
 
     // In the constructor make the address that deploys this contract the 1st retailer
-    constructor() public {}
+    constructor() public {
+        _addRetailer(msg.sender);
+    }
 
     // Define a modifier that checks to see if msg.sender has the appropriate role
     modifier onlyRetailer() {
-        require(isRetailer(msg.sender));
+        require(
+            isRetailer(msg.sender),
+            "Only retailers can perform this action."
+        );
         _;
     }
 

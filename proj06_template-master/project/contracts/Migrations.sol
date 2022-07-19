@@ -1,4 +1,5 @@
-pragma solidity >=0.5.16;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 contract Migrations {
     address public owner;

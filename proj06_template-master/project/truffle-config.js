@@ -13,21 +13,22 @@ const HDWalletProvider = require('truffle-hdwallet-provider');
 module.exports = {
     networks: {
         development: {
-        host: "127.0.0.1",
-        port: 7545,
-        network_id: "*"
+            host: "127.0.0.1",
+            port: 7545,
+            network_id: "*",
+            websockets: true,
         },
 
         rinkeby: {
-        networkCheckTimeout: 10000, // ms
-        provider: () => new HDWalletProvider(
-            process.env.ETH_LOCAL_SEED_PHRASE,
-            process.env.ENDPOINT,
-        ),
-        gas: 5000000,
-        gasPrice: 25000000000,
-        network_id: "*",
-        confirmations: 0,
+            networkCheckTimeout: 10000, // ms
+            provider: () => new HDWalletProvider(
+                process.env.ETH_LOCAL_SEED_PHRASE,
+                process.env.ENDPOINT,
+            ),
+            gas: 5000000,
+            gasPrice: 25000000000,
+            network_id: "*",
+            confirmations: 0,
         },
     },
 

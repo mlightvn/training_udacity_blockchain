@@ -1,4 +1,5 @@
-pragma solidity >=0.5.16;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 // Import the library 'Roles'
 import "./Roles.sol";
@@ -21,7 +22,7 @@ contract FarmerRole {
 
     // Define a modifier that checks to see if msg.sender has the appropriate role
     modifier onlyFarmer() {
-        require(isFarmer(msg.sender));
+        require(isFarmer(msg.sender), "Only farmers can perform this action.");
         _;
     }
 

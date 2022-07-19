@@ -1,5 +1,5 @@
-pragma solidity >=0.5.16;
-// pragma solidity >=0.8.0;
+// SPDX-License-Identifier: Personal
+pragma solidity 0.5.16;
 
 // Import the library 'Roles'
 import "./Roles.sol";
@@ -16,12 +16,15 @@ contract ConsumerRole {
 
     // In the constructor make the address that deploys this contract the 1st consumer
     constructor() public {
-        addConsumer(msg.sender);
+        _addConsumer(msg.sender);
     }
 
     // Define a modifier that checks to see if msg.sender has the appropriate role
     modifier onlyConsumer() {
-        require(isConsumer(msg.sender));
+        require(
+            isConsumer(msg.sender),
+            "Only consumers can perform this action."
+        );
         _;
     }
 
