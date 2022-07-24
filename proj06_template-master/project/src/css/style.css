@@ -39,6 +39,10 @@ button {
     cursor: pointer;
 }
 
+button[disabled]{
+    background-color: #ccc;
+}
+
 .btn-reset{
   background-color: #d44000;
 }
@@ -76,5 +80,9 @@ button {
 }
 
 [visabled="false"] {
+  display: none;
+}
+
+.d-none {
   display: none;
 }

@@ -17,6 +17,7 @@ App = {
     distributorID: "0x0000000000000000000000000000000000000000",
     retailerID: "0x0000000000000000000000000000000000000000",
     consumerID: "0x0000000000000000000000000000000000000000",
+    state: 0,
 
     init: async function () {
         App.readForm();
@@ -113,9 +114,9 @@ App = {
             App.contracts.SupplyChain = TruffleContract(SupplyChainArtifact);
             App.contracts.SupplyChain.setProvider(App.web3Provider);
 
-            // App.fetchItemBufferOne();
-            // App.fetchItemBufferTwo();
-            // App.fetchEvents();
+            App.fetchItemBufferOne();
+            App.fetchItemBufferTwo();
+            App.fetchEvents();
 
         });
 
@@ -168,7 +169,10 @@ App = {
             case 10:
                 return await App.fetchItemBufferTwo(event);
                 break;
-            }
+            case 11:
+                return await App.fetchEvents(event);
+                break;
+        }
     },
 
     reset: function(event) {
@@ -190,6 +194,10 @@ App = {
     harvestItem: function(event) {
         event.preventDefault();
 
+        // $("button[data-id=1]").prop("disabled", true);
+        // $("button[data-id=2]").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.harvestItem(
                 App.sku,
@@ -203,7 +211,10 @@ App = {
                 {from: App.metamaskAccountID},
             );
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=1]").prop("disabled", true);
+            $("button[data-id=2]").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('harvestItem',result);
         }).catch(function(err) {
             console.log('harvestItem error =========================== <<<');
@@ -215,10 +226,17 @@ App = {
     processItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=2]").prop("disabled", true);
+        // $("button[data-id=3]").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.processItem(App.upc, {from: App.metamaskAccountID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=2]").prop("disabled", true);
+            $("button[data-id=3]").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('processItem',result);
         }).catch(function(err) {
             console.log('processItem error =========================== <<<');
@@ -230,10 +248,17 @@ App = {
     packItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=3]").prop("disabled", true);
+        // $("button[data-id=4]").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.packItem(App.upc, {from: App.metamaskAccountID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=3]").prop("disabled", true);
+            $("button[data-id=4]").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('packItem',result);
         }).catch(function(err) {
             console.log('packItem error =========================== <<<');
@@ -245,11 +270,20 @@ App = {
     sellItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=4]").prop("disabled", true);
+        // $("button[data-id=5]").prop("disabled", false);
+        // $("#distributorID").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             // let productPrice = App.web3.toWei("" + App.productPrice, "ether");
             console.log('productPrice',App.productPrice);
             return instance.sellItem(App.upc, App.productPrice, {from: App.metamaskAccountID});
         }).then(function(result) {
+            $("button[data-id=4]").prop("disabled", true);
+            $("button[data-id=5]").prop("disabled", false);
+            $("#distributorID").prop("disabled", false);
+
             // $("#ftc-item").text(result);
             console.log('sellItem',result);
         }).catch(function(err) {
@@ -262,13 +296,20 @@ App = {
     buyItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=5]").prop("disabled", true);
+        // $("button[data-id=6]").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             // let buyPrice = App.productPrice;
             // const walletValue = web3.utils.toWei("" + buyPrice, "ether");
             // console.log({productPrice: App.productPrice, buyPrice: (parseFloat(App.productPrice) + 0.03),walletValue});
             return instance.buyItem(App.upc, {from: App.distributorID, value: App.productPrice});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=5]").prop("disabled", true);
+            $("button[data-id=6]").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('buyItem',result);
         }).catch(function(err) {
             console.log('buyItem error =========================== <<<');
@@ -280,10 +321,21 @@ App = {
     shipItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=6]").prop("disabled", true);
+        // $("button[data-id=7]").prop("disabled", false);
+        // $("#distributorID").prop("disabled", true);
+        // $("#retailerID").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.shipItem(App.upc, {from: App.distributorID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=6]").prop("disabled", true);
+            $("button[data-id=7]").prop("disabled", false);
+            $("#distributorID").prop("disabled", true);
+            $("#retailerID").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('shipItem',result);
         }).catch(function(err) {
             console.log('shipItem error =========================== <<<');
@@ -295,10 +347,21 @@ App = {
     receiveItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=7]").prop("disabled", true);
+        // $("button[data-id=8]").prop("disabled", false);
+        // $("#retailerID").prop("disabled", true);
+        // $("#consumerID").prop("disabled", false);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.receiveItem(App.upc, {from: App.retailerID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=7]").prop("disabled", true);
+            $("button[data-id=8]").prop("disabled", false);
+            $("#retailerID").prop("disabled", true);
+            $("#consumerID").prop("disabled", false);
+
+            // $("#ftc-item").text(result);
             console.log('receiveItem',result);
         }).catch(function(err) {
             console.log('receiveItem error =========================== <<<');
@@ -310,10 +373,21 @@ App = {
     purchaseItem: function (event) {
         event.preventDefault();
 
+        // $("button[data-id=8]").prop("disabled", true);
+        // $("button[data-id=9]").prop("disabled", false);
+        // $("button[data-id=1]").prop("disabled", false);
+        // $("#consumerID").prop("disabled", true);
+        // return
+
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.purchaseItem(App.upc, {from: App.consumerID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("button[data-id=8]").prop("disabled", true);
+            $("button[data-id=9]").prop("disabled", false);
+            $("button[data-id=1]").prop("disabled", false);
+            $("#consumerID").prop("disabled", true);
+
+            // $("#ftc-item").text(result);
             console.log('purchaseItem',result);
         }).catch(function(err) {
             console.log('purchaseItem error =========================== <<<');
@@ -354,53 +428,89 @@ App = {
         });
     },
 
+    // StateValue: {
+    //     get(){
+    //         return App.state
+    //     },
+    //     set(value){
+    //         if(typeof state != "number"){
+    //             return 0;
+    //         }
+
+    //         App.state = value
+    //     }
+    // },
     stateLabel: function (state) {
-        if(typeof state != "int"){
+        if(typeof state != "number"){
             return 'Unknown';
         }
+
+        App.state = state;
+
+        $("button[data-id]").prop("disabled", true);
+        $("button[data-id=9]").prop("disabled", false);
+        $("button[data-id=10]").prop("disabled", false);
         switch (state) {
             case 0:
+                $("button[data-id=2]").prop("disabled", false);
+
                 return 'Harvested';
             case 1:
+                $("button[data-id=3]").prop("disabled", false);
+
                 return 'Processed';
             case 2:
+                $("button[data-id=4]").prop("disabled", false);
+
                 return 'Packed';
             case 3:
+                $("button[data-id=5]").prop("disabled", false);
+
                 return 'ForSales';
             case 4:
+                $("button[data-id=6]").prop("disabled", false);
+
                 return 'Bought';
             case 5:
+                $("button[data-id=7]").prop("disabled", false);
+
                 return 'Shipped';
             case 6:
+                $("button[data-id=8]").prop("disabled", false);
+
                 return 'Received';
             case 7:
+                $("button[data-id=1]").prop("disabled", false);
+
                 return 'Purchased';
             default:
+                $("button[data-id=2]").prop("disabled", false);
+
                 return 'Unknown';
         }
     },
 
     fetchEvents: function () {
-        // if (typeof App.contracts.SupplyChain.currentProvider.sendAsync !== "function") {
-        //     App.contracts.SupplyChain.currentProvider.sendAsync = function () {
-        //         return App.contracts.SupplyChain.currentProvider.send.apply(
-        //         App.contracts.SupplyChain.currentProvider,
-        //             arguments
-        //       );
-        //     };
-        // }
+        if (typeof App.contracts.SupplyChain.currentProvider.sendAsync !== "function") {
+            App.contracts.SupplyChain.currentProvider.sendAsync = function () {
+                return App.contracts.SupplyChain.currentProvider.send.apply(
+                App.contracts.SupplyChain.currentProvider,
+                    arguments
+              );
+            };
+        }
 
-        // App.contracts.SupplyChain.deployed().then(function(instance) {
-        //     instance.allEvents(function(err, log){
-        //         if (!err){
-        //             $("#ftc-events").append('<li>' + log.event + ' - ' + log.transactionHash + '</li>');
-        //         }
-        //     });
-        // }).catch(function(err) {
-        //     console.log('fetchEvents error =========================== <<<');
-        //     console.error(err.message);
-        //     console.log('fetchEvents error =========================== >>>');
-        // });
+        App.contracts.SupplyChain.deployed().then(function(instance) {
+            instance.allEvents(function(err, log){
+                if (!err){
+                    $("#ftc-events").append('<li>' + log.event + ' - ' + log.transactionHash + '</li>');
+                }
+            });
+        }).catch(function(err) {
+            console.log('fetchEvents error =========================== <<<');
+            console.error(err.message);
+            console.log('fetchEvents error =========================== >>>');
+        });
 
     }
 };

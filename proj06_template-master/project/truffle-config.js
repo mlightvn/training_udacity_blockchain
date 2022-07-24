@@ -28,7 +28,7 @@ module.exports = {
             gas: 5000000,
             gasPrice: 25000000000,
             network_id: "*",
-            confirmations: 1,
+            confirmations: 0,
         },
     },
 
