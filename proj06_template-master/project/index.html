@@ -23,19 +23,30 @@
         <div class="form-group">
             SKU
             <br>
-            <input class="input-field" type="number" id="sku" name="sku" value=1><br>
+            <input class="input-field" type="number" id="sku" name="sku" value="1"><br>
             UPC
             <br>
-            <input type="number" id="upc" name="upc" value=1><br>
+            <input type="number" id="upc" name="upc" value="1"><br>
             Current Owner ID
             <br>
-            <input type="text" id="ownerID" name="ownerID" value="0x4ffAFDF5E60304f22ec3d6BD704fC37a372DAc92" size="50"><br>
+            <input type="text" id="ownerID" name="ownerID" value="0x8EDa428484011a8385C356A31A38C1A675508303" size="50"><br>
+            State
+            <br>
+            <input type="text" id="state" name="state" value="" readonly><br>
             <div class=button-div>
                 <button class="btn-fetchOne" id="button" type="button" data-id="9">Fetch Data 1</button>
                 <button class="btn-fetchTwo" id="button" type="button" data-id="10">Fetch Data 2</button>
             </div>
         </div>
         <div class=form-break></div>
+
+
+        <h2>Output</h2>
+        <div class="form-group">
+            <div class="form-group">
+                <div id="ftc-item"></div>
+            </div>
+        </div>
 
         <!-- 
         <h2>Product Image</h2>
@@ -90,7 +101,7 @@
             <input type="text" id="productNotes" name="productNotes" value="Best beans for Espresso" size="100"><br>
             Product Price
             <br>
-            <input type="number" id="productPrice" name="productPrice" value="0.001" max="100" min="0.0001" style="width: 90%;">ETH<br>
+            <input type="number" id="productPrice" name="productPrice" value="1" max="100" min="1" step="1" style="width: 90%;">ETH<br>
             Distributor ID
             <br>
             <input type="text" id="distributorID" name="distributorID" value="0x661B2B02f88e003449bC2e36554d8B45e0f81591"

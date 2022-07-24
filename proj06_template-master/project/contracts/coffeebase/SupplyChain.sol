@@ -215,7 +215,7 @@ contract SupplyChain is
         Item memory item = Item(
             _sku,
             _upc,
-            msg.sender,
+            _originFarmerID,
             _originFarmerID,
             _originFarmName,
             _originFarmInformation,
@@ -327,12 +327,10 @@ contract SupplyChain is
         public
         onlyDistributor
         sold(_upc)
-        verifyCaller(items[_upc].originFarmerID)
+        verifyCaller(items[_upc].distributorID)
     {
         // Update the appropriate fields
         items[_upc].itemState = State.Shipped;
-
-        addRetailer(items[_upc].retailerID);
 
         // Emit the appropriate event
         emit Shipped(_upc);
@@ -343,11 +341,14 @@ contract SupplyChain is
 
     // Call modifier to check if upc has passed previous supply chain stage
     // Access Control List enforced by calling Smart Contract / DApp
-    function receiveItem(uint256 _upc) public shipped(_upc) onlyRetailer {
+    function receiveItem(uint256 _upc) public shipped(_upc) {
         // Update the appropriate fields - ownerID, retailerID, itemState
         items[_upc].ownerID = msg.sender;
         items[_upc].retailerID = msg.sender;
         items[_upc].itemState = State.Received;
+
+        addRetailer(items[_upc].retailerID);
+
         // Emit the appropriate event
         emit Received(_upc);
     }
