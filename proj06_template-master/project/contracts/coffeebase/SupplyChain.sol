@@ -34,14 +34,15 @@ contract SupplyChain is
 
     // Define enum 'State' with the following values:
     enum State {
-        Harvested, // 0
-        Processed, // 1
-        Packed, // 2
-        ForSale, // 3
-        Sold, // 4
-        Shipped, // 5
-        Received, // 6
-        Purchased // 7
+        Started, // 0
+        Harvested, // 1
+        Processed, // 2
+        Packed, // 3
+        ForSale, // 4
+        Sold, // 5
+        Shipped, // 6
+        Received, // 7
+        Purchased // 8
     }
 
     State constant defaultState = State.Harvested;
@@ -65,7 +66,8 @@ contract SupplyChain is
         address payable consumerID; // Metamask-Ethereum address of the Consumer
     }
 
-    // Define 8 events with the same 8 state values and accept 'upc' as input argument
+    // Define 9 events with the same 9 state values and accept 'upc' as input argument
+    // event Started(uint256 upc);
     event Harvested(uint256 upc);
     event Processed(uint256 upc);
     event Packed(uint256 upc);
@@ -110,6 +112,14 @@ contract SupplyChain is
         uint256 amountToReturn = msg.value - _price;
         items[_upc].consumerID.transfer(amountToReturn);
     }
+
+    // modifier started(uint256 _upc) {
+    //     require(
+    //         items[_upc].itemState == State.Started,
+    //         "Item is not in the Started state"
+    //     );
+    //     _;
+    // }
 
     // Define a modifier that checks if an item.state of a upc is Harvested
     modifier harvested(uint256 _upc) {
@@ -207,7 +217,7 @@ contract SupplyChain is
         string memory _originFarmLatitude,
         string memory _originFarmLongitude,
         string memory _productNotes
-    ) public {
+    ) public onlyFarmer {
         sku = _sku;
         upc = _upc;
 
@@ -215,7 +225,7 @@ contract SupplyChain is
         Item memory item = Item(
             _sku,
             _upc,
-            _originFarmerID,
+            msg.sender,
             _originFarmerID,
             _originFarmName,
             _originFarmInformation,
@@ -300,6 +310,7 @@ contract SupplyChain is
     function buyItem(uint256 _upc)
         public
         payable
+        onlyDistributor
         forSale(_upc)
         paidEnough(msg.value)
         checkValue(_upc)
@@ -312,7 +323,7 @@ contract SupplyChain is
         // Transfer money to farmer
         items[_upc].ownerID.transfer(msg.value);
 
-        addDistributor(msg.sender);
+        // addDistributor(msg.sender);
 
         // emit the appropriate event
         emit Sold(_upc);
@@ -341,13 +352,13 @@ contract SupplyChain is
 
     // Call modifier to check if upc has passed previous supply chain stage
     // Access Control List enforced by calling Smart Contract / DApp
-    function receiveItem(uint256 _upc) public shipped(_upc) {
+    function receiveItem(uint256 _upc) public onlyRetailer shipped(_upc) {
         // Update the appropriate fields - ownerID, retailerID, itemState
         items[_upc].ownerID = msg.sender;
         items[_upc].retailerID = msg.sender;
         items[_upc].itemState = State.Received;
 
-        addRetailer(items[_upc].retailerID);
+        // addRetailer(items[_upc].retailerID);
 
         // Emit the appropriate event
         emit Received(_upc);
@@ -358,13 +369,13 @@ contract SupplyChain is
 
     // Call modifier to check if upc has passed previous supply chain stage
     // Access Control List enforced by calling Smart Contract / DApp
-    function purchaseItem(uint256 _upc) public received(_upc) {
+    function purchaseItem(uint256 _upc) public onlyConsumer received(_upc) {
         // Update the appropriate fields - ownerID, consumerID, itemState
         items[_upc].ownerID = msg.sender;
         items[_upc].consumerID = msg.sender;
         items[_upc].itemState = State.Purchased;
 
-        addConsumer(msg.sender);
+        // addConsumer(msg.sender);
 
         // Emit the appropriate event
         emit Purchased(_upc);
@@ -374,7 +385,6 @@ contract SupplyChain is
     function fetchItemBufferOne(uint256 _upc)
         public
         view
-        onlyConsumer
         returns (
             uint256 itemSKU,
             uint256 itemUPC,
@@ -412,7 +422,6 @@ contract SupplyChain is
     function fetchItemBufferTwo(uint256 _upc)
         public
         view
-        onlyConsumer
         returns (
             uint256 itemSKU,
             uint256 itemUPC,

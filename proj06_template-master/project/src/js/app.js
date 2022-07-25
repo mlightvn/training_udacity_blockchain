@@ -172,6 +172,14 @@ App = {
             case 11:
                 return await App.fetchEvents(event);
                 break;
+            case 12:
+                return await App.addDistributor(event);
+            case 13:
+                return await App.addRetailer(event);
+            case 14:
+                return await App.addConsumer(event);
+            case 15:
+                return await App.addFarmer(event);
         }
     },
 
@@ -304,6 +312,7 @@ App = {
             // let buyPrice = App.productPrice;
             // const walletValue = web3.utils.toWei("" + buyPrice, "ether");
             // console.log({productPrice: App.productPrice, buyPrice: (parseFloat(App.productPrice) + 0.03),walletValue});
+
             return instance.buyItem(App.upc, {from: App.distributorID, value: App.productPrice});
         }).then(function(result) {
             $("button[data-id=5]").prop("disabled", true);
@@ -380,6 +389,7 @@ App = {
         // return
 
         App.contracts.SupplyChain.deployed().then(function(instance) {
+            // instance.addConsumer(App.consumerID, {from: App.metamaskAccountID})
             return instance.purchaseItem(App.upc, {from: App.consumerID});
         }).then(function(result) {
             $("button[data-id=8]").prop("disabled", true);
@@ -428,18 +438,66 @@ App = {
         });
     },
 
-    // StateValue: {
-    //     get(){
-    //         return App.state
-    //     },
-    //     set(value){
-    //         if(typeof state != "number"){
-    //             return 0;
-    //         }
+    addFarmer: function (event) {
+        event.preventDefault();
+        console.log("addFarmer");
 
-    //         App.state = value
-    //     }
-    // },
+        App.contracts.SupplyChain.deployed().then(function(instance) {
+            return instance.addFarmer(App.originFarmerID, {from: App.metamaskAccountID})
+            // return instance.addFarmer(App.metamaskAccountID, {from: App.metamaskAccountID})
+        }).then(function(result) {
+            console.log('addFarmer',result);
+        }).catch(function(err) {
+            console.log('addFarmer error =========================== <<<');
+            console.error(err.message);
+            console.log('addFarmer error =========================== >>>');
+        });
+    },
+
+    addDistributor: function (event) {
+        event.preventDefault();
+
+        App.contracts.SupplyChain.deployed().then(function(instance) {
+            return instance.addDistributor(App.distributorID, {from: App.metamaskAccountID})
+        }).then(function(result) {
+            console.log('addDistributor',result);
+        }).catch(function(err) {
+            console.log('addDistributor error =========================== <<<');
+            console.error(err.message);
+            console.log('addDistributor error =========================== >>>');
+        });
+    },
+
+    addRetailer: function (event) {
+        event.preventDefault();
+
+        App.contracts.SupplyChain.deployed().then(function(instance) {
+            // return instance.addRetailer(App.metamaskAccountID, {from: App.metamaskAccountID})
+            return instance.addRetailer(App.retailerID, {from: App.metamaskAccountID})
+        }).then(function(result) {
+            console.log('addRetailer',result);
+        }).catch(function(err) {
+            console.log('addRetailer error =========================== <<<');
+            console.error(err.message);
+            console.log('addRetailer error =========================== >>>');
+        });
+    },
+
+    addConsumer: function (event) {
+        event.preventDefault();
+
+        App.contracts.SupplyChain.deployed().then(function(instance) {
+            // return instance.addConsumer(App.metamaskAccountID, {from: App.metamaskAccountID})
+            return instance.addConsumer(App.consumerID, {from: App.metamaskAccountID})
+        }).then(function(result) {
+            console.log('addConsumer',result);
+        }).catch(function(err) {
+            console.log('addConsumer error =========================== <<<');
+            console.error(err.message);
+            console.log('addConsumer error =========================== >>>');
+        });
+    },
+
     stateLabel: function (state) {
         if(typeof state != "number"){
             return 'Unknown';
@@ -450,36 +508,48 @@ App = {
         $("button[data-id]").prop("disabled", true);
         $("button[data-id=9]").prop("disabled", false);
         $("button[data-id=10]").prop("disabled", false);
+        $("button[data-id=12]").prop("disabled", false);
+        $("button[data-id=13]").prop("disabled", false);
+        $("button[data-id=14]").prop("disabled", false);
+        $("button[data-id=15]").prop("disabled", false);
         switch (state) {
             case 0:
+                $("button[data-id=1]").prop("disabled", false);
+
+                return 'Started';
+            case 1:
                 $("button[data-id=2]").prop("disabled", false);
 
                 return 'Harvested';
-            case 1:
+            case 2:
                 $("button[data-id=3]").prop("disabled", false);
 
                 return 'Processed';
-            case 2:
+            case 3:
                 $("button[data-id=4]").prop("disabled", false);
 
                 return 'Packed';
-            case 3:
+            case 4:
                 $("button[data-id=5]").prop("disabled", false);
+                $("#distributorID").attr("disabled", false);
 
                 return 'ForSales';
-            case 4:
+            case 5:
                 $("button[data-id=6]").prop("disabled", false);
+                $("#distributorID").attr("disabled", false);
 
                 return 'Bought';
-            case 5:
+            case 6:
                 $("button[data-id=7]").prop("disabled", false);
+                $("#retailerID").attr("disabled", false);
 
                 return 'Shipped';
-            case 6:
+            case 7:
                 $("button[data-id=8]").prop("disabled", false);
+                $("#consumerID").attr("disabled", false);
 
                 return 'Received';
-            case 7:
+            case 8:
                 $("button[data-id=1]").prop("disabled", false);
 
                 return 'Purchased';
