@@ -500,6 +500,7 @@ App = {
 
     stateLabel: function (state) {
         if(typeof state != "number"){
+            $("button[data-id=1]").prop("disabled", false);
             return 'Unknown';
         }
 
