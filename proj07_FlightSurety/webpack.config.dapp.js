@@ -1,13 +1,18 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
+
+// https://webpack.js.org/configuration/dev-server/
+
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: ['babel-polyfill', path.join(__dirname, "src/dapp")],
+  // entry: ['babel-polyfill', path.join(__dirname, "src/dapp")],
+  entry: [path.join(__dirname, "src/dapp")],
   output: {
     path: path.join(__dirname, "prod/dapp"),
     filename: "bundle.js"
   },
+  stats: 'errors-warnings',
   module: {
     rules: [
     {
@@ -38,11 +43,24 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: [".js"]
+    extensions: [".js"],
+    fallback: {
+      "url": require.resolve("url/"),
+      "crypto": require.resolve("crypto-browserify"),
+      "buffer": require.resolve("buffer/"),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify"),
+      "assert": require.resolve("assert/"),
+      // "stream": require.resolve("stream-browserify"),
+      "stream": false,
+      "string_decoder": require.resolve("string_decoder/"),
+
+    },
   },
   devServer: {
-    contentBase: path.join(__dirname, "dapp"),
-    port: 8000,
-    stats: "minimal"
+    static: {
+      directory: path.join(__dirname, 'dapp'),
+    },
+    port: 8000
   }
 };
