@@ -11,8 +11,10 @@
     "test": "truffle test",
     "test:flight": "truffle test ./test/flightSurety.js",
     "test:oracles": "truffle test ./test/oracles.js",
-    "dapp": "webpack-dev-server --mode development --config webpack.config.dapp.js",
-    "dapp:prod": "webpack --mode production  --config webpack.config.dapp.js",
+    "dapp": "webpack --mode development --config webpack.config.dapp.js",
+    "dapp:watch": "webpack-dev-server --mode development --config webpack.config.dapp.js",
+    "prod": "webpack --mode production  --config webpack.config.dapp.js",
+    "prod:watch": "webpack-dev-server --mode production  --config webpack.config.dapp.js",
     "server": "rm -rf ./build/server && webpack --config webpack.config.server.js"
   },
   "author": "Nguyen Ngoc Nam <19430488+mlightvn@users.noreply.github.com> https://linktr.ee/mlight",
@@ -34,6 +36,7 @@
   "dependencies": {
     "assert": "^2.0.0",
     "babel-loader": "^8.2.5",
+    "babel-polyfill": "^6.26.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.7.1",
