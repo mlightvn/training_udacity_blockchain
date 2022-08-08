@@ -1,10 +1,11 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
-require('dotenv').config();
+// require('dotenv').config();
 
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
 var HDWalletProvider = require("truffle-hdwallet-provider");
 // var mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
 const mnemonic = process.env.ETH_LOCAL_SEED_PHRASE
+// const mnemonic = "snow wrap eagle suffer animal animal machine bacon eager clock walnut labor"
 
 module.exports = {
   networks: {
