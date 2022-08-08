@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-// GET_PASSES_THIS_REPO_UDACITY_PLEASE
-pragma solidity 0.8.15;
+pragma solidity ^0.4.25;
 
 contract Migrations {
     address public owner;
@@ -10,7 +9,7 @@ contract Migrations {
         if (msg.sender == owner) _;
     }
 
-    constructor() {
+    constructor() public {
         owner = msg.sender;
     }
 

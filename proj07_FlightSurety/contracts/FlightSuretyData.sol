@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
-pragma solidity 0.8.15;
+pragma solidity ^0.4.25;
 
-import "../node_modules/openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract FlightSuretyData {
     using SafeMath for uint256;
@@ -22,11 +22,7 @@ contract FlightSuretyData {
      * @dev Constructor
      *      The deploying account becomes contractOwner
      */
-    // constructor(address dataContract) {
-    //     contractOwner = dataContract;
-    // }
-
-    constructor() {
+    constructor() public {
         contractOwner = msg.sender;
     }
 
@@ -124,11 +120,7 @@ contract FlightSuretyData {
      * @dev Fallback function for funding smart contract.
      *
      */
-    fallback() external payable {
+    function() external payable {
         fund();
-    }
-
-    receive() external payable {
-        // custom function code
     }
 }

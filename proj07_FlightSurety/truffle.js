@@ -1,9 +1,9 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
 require('dotenv').config();
 
-// var NonceTrackerSubprovider = require("web3-provider-engine/subproviders/nonce-tracker")
-let HDWalletProvider = require("truffle-hdwallet-provider");
-// const mnemonic = "snow wrap eagle suffer animal animal machine bacon eager clock walnut labor";
+// GET_PASSES_THIS_REPO_UDACITY_PLEASE
+var HDWalletProvider = require("truffle-hdwallet-provider");
+// var mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
 const mnemonic = process.env.ETH_LOCAL_SEED_PHRASE
 
 module.exports = {
@@ -20,9 +20,7 @@ module.exports = {
     //     return new HDWalletProvider(mnemonic, process.env.ENDPOINT_LOCAL, 0, 50);
     //   },
     //   network_id: '*',
-    //   gas: 5000000,
-    //   // gasPrice: 25000000000,
-    //   websockets: true,
+    //   gas: 9999999
     // },
 
     rinkeby: {
@@ -36,28 +34,10 @@ module.exports = {
       network_id: "*",
       confirmations: 0,
     },
-    // rinkeby: {
-    //   provider: function () {
-    //     var wallet = new HDWalletProvider(
-    //       mnemonic,
-    //       process.env.ENDPOINT_LOCAL,
-    //       0,
-    //       50
-    //     );
-    //     var nonceTracker = new NonceTrackerSubprovider();
-    //     wallet.engine._providers.unshift(nonceTracker);
-    //     nonceTracker.setEngine(wallet.engine);
-    //     return wallet;
-    //   },
-    // },
   },
-
-  // contracts_directory: './src/contracts/',
-  // contracts_build_directory: './src/abis/',
-
   compilers: {
     solc: {
-      version: "0.8.15"
+      version: "^0.4.24"
     }
   }
 };

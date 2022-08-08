@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
-pragma solidity 0.8.15;
+pragma solidity ^0.4.25;
 
 // It's important to avoid vulnerabilities due to numeric overflow bugs
 // OpenZeppelin's SafeMath library, when used correctly, protects agains such bugs
 // More info: https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2018/november/smart-contract-insecurity-bad-arithmetic/
 
-import "../node_modules/openzeppelin-solidity/contracts/utils/math/SafeMath.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./FlightSuretyData.sol";
 
 /************************************************** */
@@ -38,10 +38,6 @@ contract FlightSuretyApp {
         address airline;
     }
     mapping(bytes32 => Flight) private flights;
-
-    // Track all oracle responses
-    // Key = hash(index, flight, timestamp)
-    mapping(bytes32 => ResponseInfo) private oracleResponses;
 
     /********************************************************************************************/
     /*                                       FUNCTION MODIFIERS                                 */
@@ -77,7 +73,7 @@ contract FlightSuretyApp {
      * @dev Contract constructor
      *
      */
-    constructor() {
+    constructor() public {
         contractOwner = msg.sender;
         flightSuretyData = new FlightSuretyData();
     }
@@ -98,12 +94,11 @@ contract FlightSuretyApp {
      * @dev Add an airline to the registration queue
      *
      */
-    function registerAirline()
+    function registerAirline(address airlineAddress)
         external
         pure
         returns (bool success, uint256 votes)
     {
-        success = true;
         return (success, 0);
     }
 
@@ -127,7 +122,7 @@ contract FlightSuretyApp {
     // Generate a request for oracles to fetch flight information
     function fetchFlightStatus(
         address airline,
-        string memory flight,
+        string flight,
         uint256 timestamp
     ) external {
         uint8 index = getRandomIndex(msg.sender);
@@ -136,13 +131,10 @@ contract FlightSuretyApp {
         bytes32 key = keccak256(
             abi.encodePacked(index, airline, flight, timestamp)
         );
-        // oracleResponses[key] = ResponseInfo({
-        //     requester: msg.sender,
-        //     isOpen: true
-        // });
-        ResponseInfo storage newResponseInfo = oracleResponses[key];
-        newResponseInfo.requester = msg.sender;
-        newResponseInfo.isOpen = true;
+        oracleResponses[key] = ResponseInfo({
+            requester: msg.sender,
+            isOpen: true
+        });
 
         emit OracleRequest(index, airline, flight, timestamp);
     }
@@ -174,6 +166,10 @@ contract FlightSuretyApp {
         // This lets us group responses and identify
         // the response that majority of the oracles
     }
+
+    // Track all oracle responses
+    // Key = hash(index, flight, timestamp)
+    mapping(bytes32 => ResponseInfo) private oracleResponses;
 
     // Event fired each time an oracle submits a response
     event FlightStatusInfo(
@@ -210,7 +206,7 @@ contract FlightSuretyApp {
         oracles[msg.sender] = Oracle({isRegistered: true, indexes: indexes});
     }
 
-    function getMyIndexes() external view returns (uint8[3] memory) {
+    function getMyIndexes() external view returns (uint8[3]) {
         require(
             oracles[msg.sender].isRegistered,
             "Not registered as an oracle"
@@ -226,7 +222,7 @@ contract FlightSuretyApp {
     function submitOracleResponse(
         uint8 index,
         address airline,
-        string memory flight,
+        string flight,
         uint256 timestamp,
         uint8 statusCode
     ) external {
@@ -262,17 +258,14 @@ contract FlightSuretyApp {
 
     function getFlightKey(
         address airline,
-        string memory flight,
+        string flight,
         uint256 timestamp
     ) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked(airline, flight, timestamp));
     }
 
     // Returns array of three non-duplicating integers from 0-9
-    function generateIndexes(address account)
-        internal
-        returns (uint8[3] memory)
-    {
+    function generateIndexes(address account) internal returns (uint8[3]) {
         uint8[3] memory indexes;
         indexes[0] = getRandomIndex(account);
 

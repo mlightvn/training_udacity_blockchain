@@ -1,3 +1,4 @@
+// GET_PASSES_THIS_REPO_UDACITY_PLEASE
 
 var FlightSuretyApp = artifacts.require("FlightSuretyApp");
 var FlightSuretyData = artifacts.require("FlightSuretyData");
@@ -27,6 +28,7 @@ var Config = async function(accounts) {
     let flightSuretyData = await FlightSuretyData.new();
     let flightSuretyApp = await FlightSuretyApp.new();
 
+    
     return {
         owner: owner,
         firstAirline: firstAirline,

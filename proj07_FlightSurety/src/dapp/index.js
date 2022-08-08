@@ -1,4 +1,3 @@
-// GET_PASSES_THIS_REPO_UDACITY_PLEASE
 
 import DOM from './dom';
 import Contract from './contract';
