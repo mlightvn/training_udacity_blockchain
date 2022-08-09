@@ -15,7 +15,8 @@
     "dapp:watch": "webpack-dev-server --mode development --config webpack.config.dapp.js",
     "prod": "webpack --mode production  --config webpack.config.dapp.js",
     "prod:watch": "webpack-dev-server --mode production  --config webpack.config.dapp.js",
-    "server": "rm -rf ./build/server && webpack --config webpack.config.server.js"
+    "server": "rm -rf ./build/server && webpack --mode development --config webpack.config.server.js",
+    "server:watch": "rm -rf ./build/server && webpack-dev-server --mode development --config webpack.config.server.js"
   },
   "author": "Nguyen Ngoc Nam <19430488+mlightvn@users.noreply.github.com> https://linktr.ee/mlight",
   "devDependencies": {
@@ -29,9 +30,11 @@
     "express": "4.16.4",
     "html-loader": "0.5.5",
     "openzeppelin-solidity": "^1.10.0",
+    "start-server-nestjs-webpack-plugin": "^2.2.5",
     "start-server-webpack-plugin": "2.2.5",
     "style-loader": "^0.23.1",
-    "superstatic": "6.0.3"
+    "superstatic": "6.0.3",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "assert": "^2.0.0",
@@ -53,7 +56,6 @@
     "web3": "^1.7.5",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-dev-server": "^4.9.3"
   }
 }

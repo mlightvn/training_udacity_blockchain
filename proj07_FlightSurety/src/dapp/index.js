@@ -46,9 +46,15 @@ function display(title, description, results) {
 
 }
 
+function setFavicons(favImg){
+    let headTitle = document.querySelector('head');
+    let setFavicon = document.createElement('link');
+    setFavicon.setAttribute('rel','shortcut icon');
+    setFavicon.setAttribute('href',favImg);
+    console.log(setFavicon);
+    // headTitle.appendChild("setFavicon");
+    // headTitle.appendChild(setFavicon);
+}
 
-
-
-
-
+setFavicons('./favicon.ico');
 
