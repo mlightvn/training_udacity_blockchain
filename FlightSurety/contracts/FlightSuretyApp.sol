@@ -19,13 +19,13 @@ contract FlightSuretyApp {
     /*                                       DATA VARIABLES                                     */
     /********************************************************************************************/
 
-    // Flight status codees
-    uint8 private constant STATUS_CODE_UNKNOWN = 0;
-    uint8 private constant STATUS_CODE_ON_TIME = 10;
-    uint8 private constant STATUS_CODE_LATE_AIRLINE = 20;
-    uint8 private constant STATUS_CODE_LATE_WEATHER = 30;
-    uint8 private constant STATUS_CODE_LATE_TECHNICAL = 40;
-    uint8 private constant STATUS_CODE_LATE_OTHER = 50;
+    // // Flight status codes
+    // uint8 private constant STATUS_CODE_UNKNOWN = 0;
+    // uint8 private constant STATUS_CODE_ON_TIME = 10;
+    // uint8 private constant STATUS_CODE_LATE_AIRLINE = 20;
+    // uint8 private constant STATUS_CODE_LATE_WEATHER = 30;
+    // uint8 private constant STATUS_CODE_LATE_TECHNICAL = 40;
+    // uint8 private constant STATUS_CODE_LATE_OTHER = 50;
 
     address private contractOwner; // Account used to deploy contract
 
@@ -53,7 +53,7 @@ contract FlightSuretyApp {
      */
     modifier requireIsOperational() {
         // Modify to call data contract's status
-        require(true, "Contract is currently not operational");
+        require(isOperational(), "Contract is currently not operational");
         _; // All modifiers require an "_" which indicates where the function body will be added
     }
 
@@ -73,17 +73,17 @@ contract FlightSuretyApp {
      * @dev Contract constructor
      *
      */
-    constructor() public {
+    constructor(address dataContract) public {
         contractOwner = msg.sender;
-        flightSuretyData = new FlightSuretyData();
+        flightSuretyData = FlightSuretyData(dataContract);
     }
 
     /********************************************************************************************/
     /*                                       UTILITY FUNCTIONS                                  */
     /********************************************************************************************/
 
-    function isOperational() public pure returns (bool) {
-        return true; // Modify to call data contract's status
+    function isOperational() public view returns (bool) {
+        return flightSuretyData.isOperational(); // Modify to call data contract's status
     }
 
     /********************************************************************************************/
@@ -94,12 +94,13 @@ contract FlightSuretyApp {
      * @dev Add an airline to the registration queue
      *
      */
-    function registerAirline(address airlineAddress)
+    function registerAirline(address airlineAddress, string _name)
         external
-        pure
-        returns (bool success, uint256 votes)
+    // returns (bool success)
     {
-        return (success, 0);
+        flightSuretyData.registerAirline(airlineAddress, _name);
+        // success = flightSuretyData.isAirlineRegistered(airlineAddress);
+        // return (success);
     }
 
     /**

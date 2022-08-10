@@ -1,23 +1,18 @@
 body {
     background-image: url('flight.jpg'); /* Source: iStockPhoto */
-    background-repeat: no-repeat;
-    background-size: cover;
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
 }
-
-.container {
+.container-page {
     margin-top: 400px;
-    background-color: #000;
     opacity: 0.9;
-    color: #fff;
-    padding: 40px;
+    /* background-color: #000; */
+    /* color: #fff; */
+    /* padding: 40px; */
 }
 
 .top-20 {
     margin-top: 20px;
-}
-
-h5 {
-    color: #999999;
 }
 
 section {
@@ -30,13 +25,16 @@ section {
 }
 
 .field-value {
-    color: #0e7fa8;
+    color: #72e4ad;
 }
 
 label.form {
     font-size: 14px;
     margin-right: 20px;
 }
+
+/*
 input {
     margin-right: 30px;
 }
+*/

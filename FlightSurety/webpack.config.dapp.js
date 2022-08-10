@@ -2,7 +2,12 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: ['babel-polyfill', path.join(__dirname, "src/dapp")],
+  entry: [
+    'babel-polyfill',
+    path.join(__dirname, "src/dapp"),
+    path.join(__dirname, "src/dapp/favicon.ico"),
+    // path.join(__dirname, "src/dapp/*.js"),
+  ],
   output: {
     path: path.join(__dirname, "prod/dapp"),
     filename: "bundle.js"
@@ -19,7 +24,7 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
         use: [
           'file-loader'
         ]

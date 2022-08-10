@@ -2,6 +2,7 @@
 import DOM from './dom';
 import Contract from './contract';
 import './flightsurety.css';
+// import "./jquery.min.js";
 
 
 (async() => {
@@ -12,7 +13,7 @@ import './flightsurety.css';
 
         // Read transaction
         contract.isOperational((error, result) => {
-            console.log(error,result);
+            console.log({isOperational: true, error,result});
             display('Operational Status', 'Check if contract is operational', [ { label: 'Operational Status', error: error, value: result} ]);
         });
     
@@ -48,7 +49,13 @@ function display(title, description, results) {
 }
 
 
-
+// $(document).ready(function(){
+//     console.log("jQuery ready")
+//     // $("#hide").click(function(){
+//     //   $("p").hide();
+//     // });
+// });
+  
 
 
 
