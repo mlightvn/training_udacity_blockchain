@@ -21,6 +21,9 @@ contract FlightSuretyData {
     uint8 public constant STATUS_CODE_LATE_TECHNICAL = 40;
     uint8 public constant STATUS_CODE_LATE_OTHER = 50;
 
+    uint256 constant M = 3; // M (3) of N (5) required to vote for a supermajority
+    address[] multiCalls = new address[](0);
+
     enum AIRLINE_STATUS {
         // UNKNOWN,
         REGISTERED,
@@ -97,7 +100,10 @@ contract FlightSuretyData {
      *      the event there is an issue that needs to be fixed
      */
     modifier requireIsOperational() {
-        require(operational, "Contract is currently not operational");
+        require(
+            operational,
+            "[requireIsOperational]Contract is currently not operational"
+        );
         _; // All modifiers require an "_" which indicates where the function body will be added
     }
 
@@ -110,7 +116,11 @@ contract FlightSuretyData {
     }
 
     modifier allowAirlineRegistered() {
-        require(numAirlines < 5, "Airlines amount must be less than 5");
+        require(
+            this.isOperational(),
+            "[allowAirlineRegistered]Contract is currently not operational"
+        );
+        // require(numAirlines < 5, "Airlines amount must be less than 5");
         // if (numAirlines >= 5) {
         //     require(
         //         airlinesApprovalAmount.div(numAirlines) >= 0.5,
@@ -314,8 +324,29 @@ contract FlightSuretyData {
      *
      * When operational mode is disabled, all write transactions except for this one will fail
      */
-    function setOperatingStatus(bool mode) external requireContractOwner {
-        operational = mode;
+    function setOperatingStatus(
+        bool mode // requireContractOwner
+    ) external {
+        // operational = mode;
+        require(
+            mode != operational,
+            "New mode must be different from existing mode"
+        );
+
+        bool isDuplicate = false;
+        for (uint256 c = 0; c < multiCalls.length; c++) {
+            if (multiCalls[c] == msg.sender) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        require(!isDuplicate, "Caller has already called this function.");
+
+        multiCalls.push(msg.sender);
+        if (multiCalls.length >= M) {
+            operational = mode;
+            multiCalls = new address[](0);
+        }
     }
 
     function isContractOwner() public view returns (bool) {
@@ -513,17 +544,20 @@ contract FlightSuretyData {
 
         require(
             passenger.passengerAddress != address(0),
-            toAsciiString(passengerAddress)
+            // toAsciiString(passengerAddress)
             // toAsciiString(msg.sender)
-            // strConcat(
-            //     "[requireFlightPassengerHasInsurance]Passenger is not registered: ",
-            //     // " - airlineAddress: ",
-            //     // airline,
-            //     " - passenger.passengerAddress",
-            //     passenger.passengerAddress,
-            //     " - passengerAddress",
-            //     passengerAddress
-            // )
+            string(
+                abi.encodePacked(
+                    "[requireFlightPassengerHasInsurance]Passenger is not registered: ",
+                    // " - airlineAddress: ",
+                    // airlines[airline].airlineAddress,
+                    " - passenger.passengerAddress: ",
+                    passenger.passengerAddress,
+                    " - passengerAddress: ",
+                    passengerAddress,
+                    " - "
+                )
+            )
         );
         require(
             passenger.insuranceAmount > 0,
