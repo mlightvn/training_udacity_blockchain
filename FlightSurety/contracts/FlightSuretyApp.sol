@@ -29,6 +29,15 @@ contract FlightSuretyApp {
 
     address private contractOwner; // Account used to deploy contract
 
+    address public constant PASSENGER_ADDRESS_01 =
+        0x627306090abaB3A6e1400e9345bC60c78a8BEf57;
+    address public constant PASSENGER_ADDRESS_02 =
+        0x821aEa9a577a9b44299B9c15c88cf3087F3b5544;
+    address public constant PASSENGER_ADDRESS_03 =
+        0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2;
+    address public constant PASSENGER_ADDRESS_04 =
+        0x2932b7A2355D6fecc4b5c0B6BD44cC31df247a2e;
+
     FlightSuretyData private flightSuretyData; // Contract instance of FlightSuretyData
 
     struct Flight {
@@ -38,6 +47,13 @@ contract FlightSuretyApp {
         address airline;
     }
     mapping(bytes32 => Flight) private flights;
+
+    // event BuyInsurance(
+    //     address airline,
+    //     string flight,
+    //     uint256 timestamp,
+    //     uint256 amount
+    // );
 
     /********************************************************************************************/
     /*                                       FUNCTION MODIFIERS                                 */
@@ -73,9 +89,49 @@ contract FlightSuretyApp {
      * @dev Contract constructor
      *
      */
-    constructor(address dataContract) public {
+    constructor(address dataContract, address _airlineAddress) public {
         contractOwner = msg.sender;
+        address airlineAddress = _airlineAddress;
+
         flightSuretyData = FlightSuretyData(dataContract);
+
+        registerAirline(airlineAddress, "Airline 1");
+
+        registerFlight(airlineAddress, "Flight 01", 100000);
+        registerFlight(airlineAddress, "Flight 02", 100001);
+        registerFlight(airlineAddress, "Flight 03", 100002);
+
+        registerPassenger(
+            airlineAddress,
+            "Flight 01",
+            100000,
+            PASSENGER_ADDRESS_01
+        );
+        registerPassenger(
+            airlineAddress,
+            "Flight 01",
+            100000,
+            PASSENGER_ADDRESS_02
+        );
+        registerPassenger(
+            airlineAddress,
+            "Flight 01",
+            100000,
+            PASSENGER_ADDRESS_03
+        );
+
+        registerPassenger(
+            airlineAddress,
+            "Flight 02",
+            100001,
+            PASSENGER_ADDRESS_01
+        );
+        registerPassenger(
+            airlineAddress,
+            "Flight 03",
+            100002,
+            PASSENGER_ADDRESS_01
+        );
     }
 
     /********************************************************************************************/
@@ -95,7 +151,8 @@ contract FlightSuretyApp {
      *
      */
     function registerAirline(address airlineAddress, string _name)
-        external
+        public
+        payable
     // returns (bool success)
     {
         flightSuretyData.registerAirline(airlineAddress, _name);
@@ -107,7 +164,13 @@ contract FlightSuretyApp {
      * @dev Register a future flight for insuring.
      *
      */
-    function registerFlight() external pure {}
+    function registerFlight(
+        address airlineAddress,
+        string flightName,
+        uint256 timestamp
+    ) public payable {
+        flightSuretyData.registerFlight(airlineAddress, flightName, timestamp);
+    }
 
     /**
      * @dev Called after oracle has updated flight status
@@ -137,7 +200,98 @@ contract FlightSuretyApp {
             isOpen: true
         });
 
+        FlightSuretyData.FLIGHT_STATUS flightStatus = flightSuretyData
+            .fetchFlightStatus(airline, flight, timestamp);
+        // if(flightStatus == FlightSuretyData.FLIGHT_STATUS.ON_TIME) {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.ON_TIME);
+        // } else if(flightStatus == FlightSuretyData.FLIGHT_STATUS.LATE_AIRLINE) {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.LATE_AIRLINE);
+        // } else if(flightStatus == FlightSuretyData.FLIGHT_STATUS.LATE_WEATHER) {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.LATE_WEATHER);
+        // } else if(flightStatus == FlightSuretyData.FLIGHT_STATUS.LATE_TECHNICAL) {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.LATE_TECHNICAL);
+        // } else if(flightStatus == FlightSuretyData.FLIGHT_STATUS.LATE_OTHER) {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.LATE_OTHER);
+        // } else {
+        //     flightSuretyData.processFlightStatus(airline, flight, timestamp, FlightSuretyData.FLIGHT_STATUS.UNKNOWN);
+        // }
+
         emit OracleRequest(index, airline, flight, timestamp);
+    }
+
+    // function fetchFlightStatus(
+    //     address airline,
+    //     string flight,
+    //     uint256 timestamp
+    // ) external view returns (uint8) {
+    //     return flightSuretyData.fetchFlightStatus(airline, flight, timestamp);
+    // }
+
+    function fetchContractOwner() public view returns (address) {
+        return contractOwner;
+    }
+
+    function fetchFlightKey(
+        address airline,
+        string flight,
+        uint256 timestamp
+    ) public view returns (bytes32 key) {
+        return getFlightKey(airline, flight, timestamp);
+    }
+
+    function payInsurance(
+        address airline,
+        string flight,
+        uint256 timestamp,
+        address passengerAddress,
+        uint256 insuranceAmount
+    ) public {
+        flightSuretyData.buy(
+            airline,
+            flight,
+            timestamp,
+            passengerAddress,
+            insuranceAmount
+        );
+
+        uint8 index = getRandomIndex(msg.sender);
+        bytes32 key = keccak256(
+            abi.encodePacked(index, airline, flight, timestamp)
+        );
+        oracleResponses[key] = ResponseInfo({
+            requester: msg.sender,
+            isOpen: true
+        });
+        emit OracleRequest(index, airline, flight, timestamp);
+        // emit BuyInsurance(airline, flight, timestamp, msg.value);
+    }
+
+    function registerPassenger(
+        address airline,
+        string flight,
+        uint256 timestamp,
+        address passengerAddress
+    ) public {
+        flightSuretyData.registerPassenger(
+            airline,
+            flight,
+            timestamp,
+            passengerAddress
+        );
+    }
+
+    function withdrawInsurance(
+        address airline,
+        string flight,
+        uint256 timestamp,
+        address passengerAddress
+    ) public {
+        flightSuretyData.withdrawInsurance(
+            airline,
+            flight,
+            timestamp,
+            passengerAddress
+        );
     }
 
     // region ORACLE MANAGEMENT

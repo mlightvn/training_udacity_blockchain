@@ -2,6 +2,8 @@ import FlightSuretyApp from '../../build/contracts/FlightSuretyApp.json';
 import Config from './config.json';
 import Web3 from 'web3';
 
+const GAS = 1000000
+
 export default class Contract {
     constructor(network, callback) {
 
@@ -18,6 +20,8 @@ export default class Contract {
         this.web3.eth.getAccounts((error, accts) => {
            
             this.owner = accts[0];
+            let elPassengerAddress = document.getElementById("input[flight][insurance][passenger][address]");
+            elPassengerAddress.value = this.owner;
 
             let counter = 1;
             
@@ -40,16 +44,61 @@ export default class Contract {
             .call({ from: self.owner}, callback);
     }
 
-    fetchFlightStatus(flight, callback) {
+    fetchFlightStatus(airline, flight, timestamp, callback) {
         let self = this;
         let payload = {
-            airline: self.airlines[0],
-            flight: flight,
-            timestamp: Math.floor(Date.now() / 1000)
-        } 
+            airline,
+            flight,
+            timestamp,
+            owner: self.owner,
+        }
+        console.log({fetchFlightStatus: "fetchFlightStatus", airlines: self.airlines, payload});
         self.flightSuretyApp.methods
             .fetchFlightStatus(payload.airline, payload.flight, payload.timestamp)
-            .send({ from: self.owner}, (error, result) => {
+            .send({ from: self.owner, gas: GAS}, (error, result) => {
+                callback(error, payload);
+            });
+    }
+
+    payInsurance(airline, flight, timestamp, passengerAddress, _insuranceAmount, callback) {
+        let self = this;
+        let insuranceAmount = 0;
+
+        try {
+            insuranceAmount = parseInt(_insuranceAmount);
+        }catch(error) {
+            console.error("===== payInsurance =====");
+            console.error(error);
+        }
+
+        let payload = {
+            airline,
+            flight,
+            timestamp,
+            owner: self.owner,
+            passengerAddress,
+            insuranceAmount,
+        }
+        self.flightSuretyApp.methods
+            .payInsurance(payload.airline, payload.flight, payload.timestamp, payload.passengerAddress, insuranceAmount)
+            .send({ from: self.owner, gas: GAS}, (error, result) => {
+                callback(error, payload);
+            });
+    }
+
+    withdrawInsurance(airline, flight, timestamp, passengerAddress, insuranceAmount, callback) {
+        let self = this;
+        let payload = {
+            airline,
+            flight,
+            timestamp,
+            owner: self.owner,
+            passengerAddress,
+            insuranceAmount,
+        }
+        self.flightSuretyApp.methods
+            .withdrawInsurance(payload.airline, payload.flight, payload.timestamp, payload.passengerAddress)
+            .send({ from: self.owner, gas: GAS}, (error, result) => {
                 callback(error, payload);
             });
     }

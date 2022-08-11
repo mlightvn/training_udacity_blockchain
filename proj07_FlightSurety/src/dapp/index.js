@@ -3,9 +3,24 @@ import DOM from './dom';
 import Contract from './contract';
 import './flightsurety.css';
 
+const FLIGHT_NUMBER_LIST = {
+    "Flight 01": {
+        "value": "Flight 01",
+        "timestamp": "100000"
+    },
+    "Flight 02": {
+        "value": "Flight 02",
+        "timestamp": "100001"
+    },
+    "Flight 03": {
+        "value": "Flight 03",
+        "timestamp": "100002"
+    },
+}
+
 (async() => {
 
-    let result = null;
+    // let result = null;
 
     let contract = new Contract('localhost', () => {
 
@@ -17,14 +32,35 @@ import './flightsurety.css';
     
 
         // User-submitted transaction
-        DOM.elid('submit-oracle').addEventListener('click', () => {
-            let flight = DOM.elid('flight-number').value;
+        // DOM.elid('submit-oracle').addEventListener('click', () => {
+        //     let flight = DOM.elid('input[flight][number]').value;
+        //     // Write transaction
+        //     contract.fetchFlightStatus(flight, (error, result) => {
+        //         display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+        //     });
+        // })
+
+        DOM.elid('action[flight][status][fetch]').addEventListener('click', () => {
+            let flight = DOM.elid('input[flight][insurance][passenger]').value;
             // Write transaction
             contract.fetchFlightStatus(flight, (error, result) => {
                 display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
             });
         })
-    
+
+        DOM.elid('action[passenger][flight][insurance][buy]').addEventListener('click', () => {
+            // alert('Buy insurance for flight');
+            // return;
+
+            let airline = DOM.elid('input[airlines][value][add]').value;
+            let flight = DOM.elid('input[passenger][airline-choice][flight_list][address]').value;
+            console.log({airline, flight});
+            // let passenger = DOM.elid('input[passenger][flight][insurance][buy]').value;
+            // Write transaction
+            // contract.fetchFlightStatus(flight, (error, result) => {
+            //     display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+            // });
+        })
     });
     
 
