@@ -2,21 +2,14 @@
 import DOM from './dom';
 import Contract from './contract';
 import './flightsurety.css';
+// import "./jquery.min.js";
+
 
 const FLIGHT_NUMBER_LIST = {
-    "Flight 01": {
-        "value": "Flight 01",
-        "timestamp": "100000"
-    },
-    "Flight 02": {
-        "value": "Flight 02",
-        "timestamp": "100001"
-    },
-    "Flight 03": {
-        "value": "Flight 03",
-        "timestamp": "100002"
-    },
-}
+    "Flight 01": "100000",
+    "Flight 02": "100001",
+    "Flight 03": "100002",
+};
 
 (async() => {
 
@@ -26,41 +19,69 @@ const FLIGHT_NUMBER_LIST = {
 
         // Read transaction
         contract.isOperational((error, result) => {
-            console.log(error,result);
+            console.log({isOperational: true, error,result});
             display('Operational Status', 'Check if contract is operational', [ { label: 'Operational Status', error: error, value: result} ]);
         });
     
 
-        // User-submitted transaction
+        // // User-submitted transaction
         // DOM.elid('submit-oracle').addEventListener('click', () => {
-        //     let flight = DOM.elid('input[flight][number]').value;
+        //     let flight = DOM.elid('flight-number').value;
         //     // Write transaction
         //     contract.fetchFlightStatus(flight, (error, result) => {
         //         display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
         //     });
         // })
 
-        DOM.elid('action[flight][status][fetch]').addEventListener('click', () => {
-            let flight = DOM.elid('input[flight][insurance][passenger]').value;
-            // Write transaction
-            contract.fetchFlightStatus(flight, (error, result) => {
-                display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
-            });
-        })
-
-        DOM.elid('action[passenger][flight][insurance][buy]').addEventListener('click', () => {
-            // alert('Buy insurance for flight');
-            // return;
-
+        // fetch flight status
+        DOM.elid('action[flight][status][fetch]').addEventListener('click', async () => {
             let airline = DOM.elid('input[airlines][value][add]').value;
             let flight = DOM.elid('input[passenger][airline-choice][flight_list][address]').value;
-            console.log({airline, flight});
-            // let passenger = DOM.elid('input[passenger][flight][insurance][buy]').value;
+            // let flight = DOM.elid('input[flight][insurance][passenger]').value;
             // Write transaction
-            // contract.fetchFlightStatus(flight, (error, result) => {
-            //     display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
-            // });
+            // console.log({fetchFlightStatus: contract.fetchFlightStatus})
+            contract.fetchFlightStatus(airline, flight, FLIGHT_NUMBER_LIST[flight], (error, result) => {
+                display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+            });
+
         })
+
+        // buy insurance
+        DOM.elid('action[passenger][flight][insurance][buy]').addEventListener('click', async () => {
+            let airline = DOM.elid('input[airlines][value][add]').value;
+            let flight = DOM.elid('input[passenger][airline-choice][flight_list][address]').value;
+
+            let passengerAddress = DOM.elid('input[flight][insurance][passenger][address]').value;
+            let insuranceAmount = DOM.elid('input[passenger][flight][insurance][value]').value;
+            
+            // Write transaction
+            console.log({contract, airline, flight, passengerAddress, insuranceAmount});
+
+            await contract.payInsurance(airline, flight, FLIGHT_NUMBER_LIST[flight], passengerAddress, insuranceAmount, (error, result) => {
+                display('Oracles', 'Trigger oracles', [ { label: 'Buy Insurance', error: error, value: result.flight + ' ' + result.timestamp} ]);
+            });
+
+        })
+
+        // withdraw insurance
+        DOM.elid('action[passenger][insurance][withdraw]').addEventListener('click', async () => {
+            let airline = DOM.elid('input[airlines][value][add]').value;
+            let flight = DOM.elid('input[passenger][airline-choice][flight_list][address]').value;
+
+            let passengerAddress = DOM.elid('input[flight][insurance][passenger][address]').value;
+            let insuranceAmount = DOM.elid('input[passenger][flight][insurance][value]').value;
+            
+            // Write transaction
+            console.log({contract, airline, flight, passengerAddress, insuranceAmount});
+
+            await contract.withdrawInsurance(airline, flight, FLIGHT_NUMBER_LIST[flight], passengerAddress, insuranceAmount, (error, result) => {
+                display('Oracles', 'Trigger oracles', [ { label: 'Withdraw Insurance', error: error, value: result.flight + ' ' + result.timestamp} ]);
+            });
+
+        })
+
+        // 
+
     });
     
 
@@ -82,15 +103,5 @@ function display(title, description, results) {
 
 }
 
-function setFavicons(favImg){
-    let headTitle = document.querySelector('head');
-    let setFavicon = document.createElement('link');
-    setFavicon.setAttribute('rel','shortcut icon');
-    setFavicon.setAttribute('href',favImg);
-    console.log(setFavicon);
-    // headTitle.appendChild("setFavicon");
-    // headTitle.appendChild(setFavicon);
-}
 
-setFavicons('./favicon.ico');
 

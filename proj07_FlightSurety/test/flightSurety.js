@@ -5,10 +5,10 @@ var BigNumber = require('bignumber.js');
 
 contract('Flight Surety Tests', async (accounts) => {
 
-  var config;
+  var config = null;
   before('setup contract', async () => {
     config = await Test.Config(accounts);
-    // await config.flightSuretyData.authorizeCaller(config.flightSuretyApp.address);
+    await config.flightSuretyData.authorizeCaller(config.flightSuretyApp.address);
   });
 
   /****************************************************************************************/
@@ -55,12 +55,14 @@ contract('Flight Surety Tests', async (accounts) => {
 
   it(`(multiparty) can block access to functions using requireIsOperational when operating status is false`, async function () {
 
-      await config.flightSuretyData.setOperatingStatus(false);
+    // console.log({config});
+
+    await config.flightSuretyData.setOperatingStatus(false, {from: config.owner});
 
       let reverted = false;
       try 
       {
-          await config.flightSurety.setTestingMode(true);
+          await config.flightSurety.fetchFlightStatus(config.firstAirline, "Flight 01", 100000, {from: config.owner});
       }
       catch(e) {
           reverted = true;
@@ -68,7 +70,7 @@ contract('Flight Surety Tests', async (accounts) => {
       assert.equal(reverted, true, "Access not blocked for requireIsOperational");      
 
       // Set it back for other tests to work
-      await config.flightSuretyData.setOperatingStatus(true);
+      await config.flightSuretyData.setOperatingStatus(true, {from: config.owner});
 
   });
 
@@ -92,6 +94,45 @@ contract('Flight Surety Tests', async (accounts) => {
     assert.equal(result, false, "Airline should not be able to register another airline if it hasn't provided funding");
 
   });
- 
+
+
+  it('function call is made when multi-party threshold is reached', async () => {
+    
+    // ARRANGE
+    let airline_01 = accounts[1];
+    let airline_02 = accounts[2];
+    let airline_03 = accounts[3];
+    let airline_04 = accounts[4];
+    let airline_05 = accounts[5];
+    
+
+    try {
+        await config.flightSuretyApp.registerAirline(airline_01, {from: config.firstAirline});
+        await config.flightSuretyApp.registerAirline(airline_02, {from: config.firstAirline});
+        await config.flightSuretyApp.registerAirline(airline_03, {from: config.firstAirline});
+        await config.flightSuretyApp.registerAirline(airline_04, {from: config.firstAirline});
+        await config.flightSuretyApp.registerAirline(airline_05, {from: config.firstAirline});
+    }
+    catch(e) {
+        console.error({"error exception": e})
+    }
+
+
+    let startStatus = await config.flightSuretyApp.isOperational.call(); 
+    let changeStatus = !startStatus;
+
+
+    await config.flightSuretyApp.setOperatingStatus(changeStatus, {from: airline_01});
+    await config.flightSuretyApp.setOperatingStatus(changeStatus, {from: airline_02});
+    // await config.flightSuretyApp.setOperatingStatus(changeStatus, {from: airline_03});
+    // await config.flightSuretyApp.setOperatingStatus(changeStatus, {from: airline_04});
+    // await config.flightSuretyApp.setOperatingStatus(changeStatus, {from: airline_05});
+
+    let newStatus = await config.flightSuretyApp.isOperational.call(); 
+
+    // ASSERT
+    assert.equal(changeStatus, newStatus, "Multi-party call failed");
+
+  });
 
 });

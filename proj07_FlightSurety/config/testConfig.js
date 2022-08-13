@@ -1,4 +1,3 @@
-// GET_PASSES_THIS_REPO_UDACITY_PLEASE
 
 var FlightSuretyApp = artifacts.require("FlightSuretyApp");
 var FlightSuretyData = artifacts.require("FlightSuretyData");
@@ -9,16 +8,16 @@ var Config = async function(accounts) {
     // These test addresses are useful when you need to add
     // multiple users in test scripts
     let testAddresses = [
-        "0x4ffAFDF5E60304f22ec3d6BD704fC37a372DAc92",
-        "0x5eD5ef93a2DBc62eb8f73b2171d15d0eBd6aCd95",
-        "0x661B2B02f88e003449bC2e36554d8B45e0f81591",
-        "0x92B2bb275cbB5b19B2896B939eC7531357616D9A",
-        "0x8EDa428484011a8385C356A31A38C1A675508303",
-        "0x08fed19C6Ce648be105a91c83dEef9b6dE71415C",
-        "0x1621B2c42EA582af127AB834D7C7A3bdf6eaF9b1",
-        "0x477383F21df9a405bdA13d860aabD78323f7eB95",
-        "0xf103576efffF95223E516F707b4f59B6343Ed1E1",
-        "0x748Fc7757A628642d07F346B83F784d72BD3855b",
+        "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+        "0xf17f52151EbEF6C7334FAD080c5704D77216b732",
+        "0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef",
+        "0x821aEa9a577a9b44299B9c15c88cf3087F3b5544",
+        "0x0d1d4e623D10F9FBA5Db95830F7d3839406C6AF2",
+        "0x2932b7A2355D6fecc4b5c0B6BD44cC31df247a2e",
+        "0x2191eF87E392377ec08E7c08Eb105Ef5448eCED5",
+        "0x0F4F2Ac550A1b4e2280d04c21cEa7EBD822934b5",
+        "0x6330A553Fc93768F612722BB8c2eC78aC90B3bbc",
+        "0x5AEDA56215b167893e80B4fE645BA6d5Bab767DE",
     ];
 
 
@@ -26,9 +25,8 @@ var Config = async function(accounts) {
     let firstAirline = accounts[1];
 
     let flightSuretyData = await FlightSuretyData.new();
-    let flightSuretyApp = await FlightSuretyApp.new();
+    let flightSuretyApp = await FlightSuretyApp.new(flightSuretyData.address /* data contract address */, firstAirline /* Airline address */);
 
-    
     return {
         owner: owner,
         firstAirline: firstAirline,

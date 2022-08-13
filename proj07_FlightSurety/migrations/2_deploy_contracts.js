@@ -1,17 +1,20 @@
+// GET_PASSES_THIS_REPO_UDACITY_PLEASE
+require('dotenv').config();
+
 const FlightSuretyApp = artifacts.require("FlightSuretyApp");
 const FlightSuretyData = artifacts.require("FlightSuretyData");
 const fs = require('fs');
 
 module.exports = function(deployer) {
 
-    let firstAirline = '0x27b5419afb9c3D99A262046383e083Ae7d81900a';
+    let firstAirline = "0xf17f52151EbEF6C7334FAD080c5704D77216b732";
     deployer.deploy(FlightSuretyData)
     .then(() => {
-        return deployer.deploy(FlightSuretyApp)
+        return deployer.deploy(FlightSuretyApp, FlightSuretyData.address, firstAirline)
                 .then(() => {
                     let config = {
                         localhost: {
-                            url: 'http://localhost:7545',
+                            url: process.env.ENDPOINT_LOCAL,
                             dataAddress: FlightSuretyData.address,
                             appAddress: FlightSuretyApp.address
                         }
