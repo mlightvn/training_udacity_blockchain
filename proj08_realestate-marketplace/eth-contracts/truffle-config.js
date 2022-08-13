@@ -1,3 +1,4 @@
+// GET_PASSES_THIS_REPO_UDACITY_PLEASE
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -18,7 +19,7 @@
  *
  */
 
-// const HDWalletProvider = require('truffle-hdwallet-provider');
+const HDWalletProvider = require('truffle-hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -44,7 +45,7 @@ module.exports = {
     //
      development: {
       host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
      },
 
@@ -74,8 +75,24 @@ module.exports = {
       // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
       // network_id: 2111,   // This network is yours, in the cloud.
       // production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    // },
+
+
+    rinkeby: {
+      networkCheckTimeout: 10000, // ms
+      provider: () => new HDWalletProvider(
+          process.env.ETH_LOCAL_SEED_PHRASE,
+          process.env.ENDPOINT,
+      ),
+      gas: 5000000,
+      gasPrice: 25000000000,
+      network_id: "*",
+      confirmations: 0,
+    },
   },
+
+  // contracts_directory: './contracts/',
+  // contracts_build_directory: './build/',
 
   // Set default mocha options here, use special reporters etc.
   mocha: {

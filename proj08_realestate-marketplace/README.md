@@ -2,6 +2,15 @@
 
 The capstone will build upon the knowledge you have gained in the course in order to build a decentralized housing product. 
 
+Tag: `GET_PASSES_THIS_REPO_UDACITY_PLEASE`
+
+# Docker
+
+```bash
+docker run -v ./zokrates/code/square:/project -ti
+zokrates/zokrates /bin/bash
+```
+
 # Project Resources
 
 * [Remix - Solidity IDE](https://remix.ethereum.org/)

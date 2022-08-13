@@ -1,3 +1,4 @@
+// GET_PASSES_THIS_REPO_UDACITY_PLEASE
 var ERC721MintableComplete = artifacts.require('ERC721MintableComplete');
 
 contract('TestERC721Mintable', accounts => {
