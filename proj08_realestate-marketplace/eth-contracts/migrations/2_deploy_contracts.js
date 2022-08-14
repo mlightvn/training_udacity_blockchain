@@ -6,5 +6,5 @@ var SolnSquareVerifier = artifacts.require("./SolnSquareVerifier.sol");
 
 module.exports = function(deployer) {
   // deployer.deploy(SquareVerifier);
-  deployer.deploy(SolnSquareVerifier);
+  deployer.deploy(SolnSquareVerifier, "NguyenNam RealEstate Marketplace", "NRM", "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/");
 };

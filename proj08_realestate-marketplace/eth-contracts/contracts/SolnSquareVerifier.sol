@@ -2,7 +2,7 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
 pragma solidity >=0.4.21 <0.6.0;
 
-import "ERC721Mintable.sol";
+import "./ERC721Mintable.sol";
 
 // TODO define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>
 contract Verifier {
@@ -27,39 +27,46 @@ contract Verifier {
 
 // TODO define another contract named SolnSquareVerifier that inherits from your ERC721Mintable class
 contract SolnSquareVerifier is CustomERC721Token {
+    constructor(
+        string memory name,
+        string memory symbol,
+        string memory baseTokenURI
+    ) public CustomERC721Token(name, symbol, baseTokenURI) {}
+
     // TODO define the following public functions
     // 1. function verifyProof(bytes32[] memory proof, bytes32[] memory inputs, uint256[] memory input_owners, uint256[] memory input_values, uint256 output) public returns (bool)
     // 2. function get_input_owners(uint256[] memory input_owners, uint256[] memory input_values, uint256 index) public returns (address)
     // 3. function get_input_values(uint256[] memory input_values, uint256 index) public returns (uint256)
     // 4. function get_output() public returns (uint256)
-    function verifyProof(
-        bytes32[] memory proof,
-        bytes32[] memory inputs,
-        uint256[] memory input_owners,
-        uint256[] memory input_values,
-        uint256 output
-    ) public returns (bool) {
-        return true;
-    }
+    // function verifyProof(
+    //     bytes32[] memory proof,
+    //     bytes32[] memory inputs,
+    //     uint256[] memory input_owners,
+    //     uint256[] memory input_values,
+    //     uint256 output
+    // ) public pure returns (bool) {
+    //     return true;
+    // }
 
-    function get_input_owners(
-        uint256[] memory input_owners,
-        uint256[] memory input_values,
-        uint256 index
-    ) public returns (address) {
-        return address(0x0);
-    }
+    // function get_input_owners(
+    //     uint256[] memory input_owners,
+    //     uint256[] memory input_values,
+    //     uint256 index
+    // ) public pure returns (address) {
+    //     return address(0x0);
+    // }
 
-    function get_input_values(uint256[] memory input_values, uint256 index)
-        public
-        returns (uint256)
-    {
-        return 0;
-    }
+    // function get_input_values(uint256[] memory input_values, uint256 index)
+    //     public
+    //     pure
+    //     returns (uint256)
+    // {
+    //     return 0;
+    // }
 
-    function get_output() public returns (uint256) {
-        return 0;
-    }
+    // function get_output() public pure returns (uint256) {
+    //     return 0;
+    // }
 
     // TODO define a solutions struct that can hold an index & an address
     struct Solution {
