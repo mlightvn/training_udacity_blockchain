@@ -1,6 +1,5 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
-var ERC721MintableComplete = artifacts.require('SolnSquareVerifier');
-
+var CustomERC721Token = artifacts.require('CustomERC721Token');
 
 contract('TestERC721Mintable', accounts => {
     const CONTRACT_NAME = "NguyenNam RealEstate Marketplace"
@@ -20,7 +19,7 @@ contract('TestERC721Mintable', accounts => {
 
     describe('match erc721 spec', function () {
         beforeEach(async function () {
-            this.contract = await ERC721MintableComplete.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
+            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
 
             // console.log("========{contract: this.contract}========")
             // console.log({contract: this.contract})
@@ -77,7 +76,7 @@ contract('TestERC721Mintable', accounts => {
 
     describe('have ownership properties', function () {
         beforeEach(async function () { 
-            this.contract = await ERC721MintableComplete.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
+            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
 
             await this.contract.mint(account_one, 1, {from: owner});
         })

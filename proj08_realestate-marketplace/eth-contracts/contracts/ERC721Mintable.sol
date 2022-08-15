@@ -135,7 +135,7 @@ contract ERC165 is Ownable {
      * @dev internal method for registering an interface
      */
     function _registerInterface(bytes4 interfaceId) internal {
-        require(interfaceId != 0xffffffff);
+        require(interfaceId != 0xffffffff, "Invalid interface ID");
         _supportedInterfaces[interfaceId] = true;
     }
 }
@@ -227,7 +227,7 @@ contract ERC721 is Pausable, ERC165 {
      * @param approved representing the status of the approval to be set
      */
     function setApprovalForAll(address to, bool approved) public {
-        require(to != msg.sender);
+        require(to != msg.sender, "You can't approve yourself");
         _operatorApprovals[msg.sender][to] = approved;
         emit ApprovalForAll(msg.sender, to, approved);
     }
@@ -274,7 +274,10 @@ contract ERC721 is Pausable, ERC165 {
         bytes memory _data
     ) public {
         transferFrom(from, to, tokenId);
-        require(_checkOnERC721Received(from, to, tokenId, _data));
+        require(
+            _checkOnERC721Received(from, to, tokenId, _data),
+            "Invalid data"
+        );
     }
 
     /**
@@ -342,7 +345,7 @@ contract ERC721 is Pausable, ERC165 {
         // TODO: update token counts & transfer ownership of the token ID
         // TODO: emit correct event
         require(_tokenOwner[tokenId] == from, "You can't transfer to yourself");
-        // require(to != address(0));
+        // require(to != address(0), "You can't transfer to yourself");
         _tokenApprovals[tokenId] = address(0);
         _ownedTokensCount[from].decrement();
         _ownedTokensCount[to].increment();
@@ -432,7 +435,10 @@ contract ERC721Enumerable is ERC165, ERC721 {
         view
         returns (uint256)
     {
-        require(index < balanceOf(owner));
+        require(
+            index < balanceOf(owner),
+            "[tokenOfOwnerByIndex]index out of range"
+        );
         return _ownedTokens[owner][index];
     }
 
@@ -451,7 +457,7 @@ contract ERC721Enumerable is ERC165, ERC721 {
      * @return uint256 token ID at the given index of the tokens list
      */
     function tokenByIndex(uint256 index) public view returns (uint256) {
-        require(index < totalSupply());
+        require(index < totalSupply(), "[tokenByIndex]index out of range");
         return _allTokens[index];
     }
 
@@ -629,7 +635,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     // see https://github.com/oraclize/ethereum-api/blob/master/oraclizeAPI_0.5.sol for strConcat()
     // require the token exists before setting
     function _setTokenURI(uint256 tokenId) public {
-        require(_exists(tokenId));
+        require(_exists(tokenId), "Token does not exist");
         _tokenURIs[tokenId] = strConcat(_baseTokenURI, uint2str(tokenId));
     }
 

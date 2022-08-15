@@ -1,0 +1,1 @@
+../../zokrates/code/square/verifier.sol

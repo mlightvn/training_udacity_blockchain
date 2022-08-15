@@ -1,10 +1,17 @@
 // GET_PASSES_THIS_REPO_UDACITY_PLEASE
 // migrating the appropriate contracts
 
-// var SquareVerifier = artifacts.require("./SquareVerifier.sol");
+// var CustomERC721Token = artifacts.require("./ERC721Mintable.sol");
+var CustomERC721Token = artifacts.require("CustomERC721Token");
+var Verifier = artifacts.require("./Verifier.sol");
 var SolnSquareVerifier = artifacts.require("./SolnSquareVerifier.sol");
 
 module.exports = function(deployer) {
-  // deployer.deploy(SquareVerifier);
-  deployer.deploy(SolnSquareVerifier, "NguyenNam RealEstate Marketplace", "NRM", "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/");
+  const CONTRACT_NAME = "NguyenNam RealEstate Marketplace"
+  const CONTRACT_SYMBOL = "NRM"
+  const CONTRACT_BASE_TOKEN_URI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
+
+  deployer.deploy(CustomERC721Token, CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI);
+  deployer.deploy(Verifier);
+  deployer.deploy(SolnSquareVerifier, Verifier.address, CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI);
 };
