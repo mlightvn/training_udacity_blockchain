@@ -20,10 +20,16 @@
  */
 
 const HDWalletProvider = require('truffle-hdwallet-provider');
+require('dotenv').config();
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+// console.log("====================");
+// console.log({ETH_REAL_SEED_PHRASE: process.env.ETH_REAL_SEED_PHRASE});
+// console.log({ENDPOINT: process.env.ENDPOINT});
+// console.log("====================");
 
 module.exports = {
   /**
@@ -47,6 +53,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+      websockets: true,      // Enable EventEmitter interface for web3 (default: false)
      },
 
     // Another network with more advanced options...
@@ -81,13 +88,14 @@ module.exports = {
     rinkeby: {
       networkCheckTimeout: 10000, // ms
       provider: () => new HDWalletProvider(
-          process.env.ETH_LOCAL_SEED_PHRASE,
+          process.env.ETH_REAL_SEED_PHRASE,
           process.env.ENDPOINT,
       ),
       gas: 5000000,
       gasPrice: 25000000000,
       network_id: "*",
-      confirmations: 0,
+      confirmations: 1,
+      websockets: true,      // Enable EventEmitter interface for web3 (default: false)
     },
   },
 

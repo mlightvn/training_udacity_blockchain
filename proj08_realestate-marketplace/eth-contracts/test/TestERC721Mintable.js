@@ -7,8 +7,14 @@ contract('TestERC721Mintable', accounts => {
     const CONTRACT_BASE_TOKEN_URI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
 
     let owner = accounts[0];
-    let account_one = accounts[1];
-    let account_two = accounts[2];
+    // let account_one = accounts[1];
+    // let account_two = accounts[2];
+
+    let account_one = accounts[1] ?? '0x0a0B017db9B5B306D219eb8e5F0f83D9235c9Bc0';
+    let account_two = accounts[2] ?? '0xa340F2804FB8761cfec141CA2a5410e2bB28AE44';
+    // console.log({account_one})
+    // console.log({account_two})
+
     // console.log({owner})
     // console.log({accounts})
     let tokenIds = [1,2,3,4,5,6,7,8,9,10]
@@ -48,7 +54,7 @@ contract('TestERC721Mintable', accounts => {
 
         it('should return total supply', async function () { 
             let totalSupply = await this.contract.totalSupply();
-            assert.equal(totalSupply, tokenIds.length, "total supply is not 10");
+            assert.equal(totalSupply, tokenIds.length, `total supply (${totalSupply}) is not ${tokenIds.length}`);
         })
 
         it('should get token balance', async function () { 
