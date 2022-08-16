@@ -640,6 +640,7 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     }
 
     function _getTokenURI(uint256 tokenId) public view returns (string memory) {
+        require(_exists(tokenId), "Token does not exist");
         return _tokenURIs[tokenId];
     }
 }
@@ -654,14 +655,14 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -calls the superclass mint and setTokenURI functions
 
 contract CustomERC721Token is ERC721Metadata {
-    // string public constant BASE_TOKEN_URI =
-    //     "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
+    string public constant BASE_TOKEN_URI =
+        "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/";
 
-    constructor(
-        string memory name,
-        string memory symbol,
-        string memory baseTokenURI
-    ) public ERC721Metadata(name, symbol, baseTokenURI) {}
+    // constructor must have only name and symbol as parameters, to match ERC721 rule, to deploy to OpenSea
+    constructor(string memory name, string memory symbol)
+        public
+        ERC721Metadata(name, symbol, BASE_TOKEN_URI)
+    {}
 
     function mint(address to, uint256 tokenId) public onlyOwner returns (bool) {
         super._mint(to, tokenId);

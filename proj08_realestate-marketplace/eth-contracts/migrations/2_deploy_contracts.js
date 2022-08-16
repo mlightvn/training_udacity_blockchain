@@ -8,10 +8,10 @@ var SolnSquareVerifier = artifacts.require("./SolnSquareVerifier.sol");
 
 module.exports = async function(deployer) {
   const CONTRACT_NAME = "NguyenNam RealEstate Marketplace"
-  const CONTRACT_SYMBOL = "NRM"
-  const CONTRACT_BASE_TOKEN_URI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
+  const CONTRACT_SYMBOL = "NNRM"
+  // const CONTRACT_BASE_TOKEN_URI = "https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/"
 
-  await deployer.deploy(CustomERC721Token, CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI);
+  await deployer.deploy(CustomERC721Token, CONTRACT_NAME, CONTRACT_SYMBOL);
   await deployer.deploy(Verifier);
-  await deployer.deploy(SolnSquareVerifier, Verifier.address, CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI);
+  await deployer.deploy(SolnSquareVerifier, Verifier.address, CONTRACT_NAME, CONTRACT_SYMBOL);
 };

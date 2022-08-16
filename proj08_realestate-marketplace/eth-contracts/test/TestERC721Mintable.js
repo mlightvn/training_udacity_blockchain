@@ -25,7 +25,7 @@ contract('TestERC721Mintable', accounts => {
 
     describe('match erc721 spec', function () {
         beforeEach(async function () {
-            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
+            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, {from: owner});
 
             // console.log("========{contract: this.contract}========")
             // console.log({contract: this.contract})
@@ -82,13 +82,19 @@ contract('TestERC721Mintable', accounts => {
 
     describe('have ownership properties', function () {
         beforeEach(async function () { 
-            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
+            this.contract = await CustomERC721Token.new(CONTRACT_NAME, CONTRACT_SYMBOL, {from: owner});
 
             await this.contract.mint(account_one, 1, {from: owner});
         })
 
         it('should fail when minting when address is not contract owner', async function () { 
-            await this.contract.mint(account_one, 2, {from: account_two});
+            let isOwner = false;
+            try {
+                await this.contract.mint(account_one, 2, {from: account_two});
+                isOwner = true;
+            } catch (error) {
+            }
+            assert.equal(false, isOwner, `account_two(${account_two}) is not owner of account_one(${account_one})`);
         })
 
         it('should return contract owner', async function () { 

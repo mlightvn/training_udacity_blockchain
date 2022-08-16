@@ -22,7 +22,7 @@ contract('TestSolnSquareVerifier', accounts => {
         beforeEach(async function () {
             this.contractVerifier = await Verifier.new({from: owner});
             let verifierAddress = this.contractVerifier.address;
-            this.contractERC721Mintable = await SolnSquareVerifier.new(verifierAddress, CONTRACT_NAME, CONTRACT_SYMBOL, CONTRACT_BASE_TOKEN_URI, {from: owner});
+            this.contractERC721Mintable = await SolnSquareVerifier.new(verifierAddress, CONTRACT_NAME, CONTRACT_SYMBOL, {from: owner});
             // this.contractVerifier = await Verifier.new({from: owner});
 
             // console.log("========{contract: this.contract}========")

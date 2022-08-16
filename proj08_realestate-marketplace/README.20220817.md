@@ -79,12 +79,12 @@ Migrations dry-run (simulation)
 1_initial_migration.js
 ======================
 
-   Replacing 'Migrations'
+   Deploying 'Migrations'
    ----------------------
-   > block number:        11213493
-   > block timestamp:     1660667609
+   > block number:        11212816
+   > block timestamp:     1660657437
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.324386514516348127
+   > balance:             0.616470113052298853
    > gas used:            226537 (0x374e9)
    > gas price:           25 gwei
    > value sent:          0 ETH
@@ -97,48 +97,48 @@ Migrations dry-run (simulation)
 2_deploy_contracts.js
 =====================
 
-   Replacing 'CustomERC721Token'
+   Deploying 'CustomERC721Token'
    -----------------------------
-   > block number:        11213495
-   > block timestamp:     1660667624
+   > block number:        11212818
+   > block timestamp:     1660657453
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.218144814516348127
-   > gas used:            4203905 (0x402581)
+   > balance:             0.511493213052298853
+   > gas used:            4153313 (0x3f5fe1)
    > gas price:           25 gwei
    > value sent:          0 ETH
-   > total cost:          0.105097625 ETH
+   > total cost:          0.103832825 ETH
 
 
-   Replacing 'Verifier'
+   Deploying 'Verifier'
    --------------------
-   > block number:        11213496
-   > block timestamp:     1660667627
+   > block number:        11212819
+   > block timestamp:     1660657456
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.193328339516348127
+   > balance:             0.486676738052298853
    > gas used:            992659 (0xf2593)
    > gas price:           25 gwei
    > value sent:          0 ETH
    > total cost:          0.024816475 ETH
 
 
-   Replacing 'SolnSquareVerifier'
+   Deploying 'SolnSquareVerifier'
    ------------------------------
-   > block number:        11213497
-   > block timestamp:     1660667640
+   > block number:        11212820
+   > block timestamp:     1660657469
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.076078139516348127
-   > gas used:            4690008 (0x479058)
+   > balance:             0.370602338052298853
+   > gas used:            4642976 (0x46d8a0)
    > gas price:           25 gwei
    > value sent:          0 ETH
-   > total cost:          0.1172502 ETH
+   > total cost:          0.1160744 ETH
 
    -------------------------------------
-   > Total cost:           0.2471643 ETH
+   > Total cost:           0.2447237 ETH
 
 Summary
 =======
 > Total deployments:   4
-> Final cost:          0.252827725 ETH
+> Final cost:          0.250387125 ETH
 
 
 
@@ -153,15 +153,15 @@ Starting migrations...
 1_initial_migration.js
 ======================
 
-   Replacing 'Migrations'
+   Deploying 'Migrations'
    ----------------------
-   > transaction hash:    0x696530c217d9a209c74c69b28e533106b27ee25a5285caddc3ee3758cc86b577
-   > Blocks: 0            Seconds: 13
-   > contract address:    0x10bBA51a92Ec8EE4DF4a15853762DFeb33A73872
-   > block number:        11213501
-   > block timestamp:     1660667664
+   > transaction hash:    0xc2c6ca12144336c8d41032ae351de03002645445dc32d874c7e91086d03419d6
+   > Blocks: 1            Seconds: 9
+   > contract address:    0xEa5dB3cbAE2FAD12D31c79dEAbB36E05F0b719D3
+   > block number:        11212824
+   > block timestamp:     1660657488
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.324386514516348127
+   > balance:             0.616470113052298853
    > gas used:            226537 (0x374e9)
    > gas price:           25 gwei
    > value sent:          0 ETH
@@ -170,7 +170,7 @@ Starting migrations...
    Pausing for 1 confirmations...
 
    -------------------------------
-   > confirmation number: 1 (block: 11213502)
+   > confirmation number: 1 (block: 11212825)
    > Saving migration to chain.
    > Saving artifacts
    -------------------------------------
@@ -180,34 +180,34 @@ Starting migrations...
 2_deploy_contracts.js
 =====================
 
-   Replacing 'CustomERC721Token'
+   Deploying 'CustomERC721Token'
    -----------------------------
-   > transaction hash:    0x54aa4d0c183d4d71f7a8f49f0a66ce24b732fee4edd6dbf17ee76bbe20c3c766
-   > Blocks: 1            Seconds: 9
-   > contract address:    0x53699807dD184E15035eEd9D853AA6ff01727b6D
-   > block number:        11213504
-   > block timestamp:     1660667709
+   > transaction hash:    0x74f0af4a456752f560df48da7393426a8e277e9026cdb2d451ec13f91cd94463
+   > Blocks: 2            Seconds: 21
+   > contract address:    0x21eE457239e167e1749E97A0A9a5d7E91839Ca1f
+   > block number:        11212828
+   > block timestamp:     1660657548
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.218144814516348127
-   > gas used:            4203905 (0x402581)
+   > balance:             0.511493213052298853
+   > gas used:            4153313 (0x3f5fe1)
    > gas price:           25 gwei
    > value sent:          0 ETH
-   > total cost:          0.105097625 ETH
+   > total cost:          0.103832825 ETH
 
    Pausing for 1 confirmations...
 
    -------------------------------
-   > confirmation number: 1 (block: 11213505)
+   > confirmation number: 1 (block: 11212829)
 
-   Replacing 'Verifier'
+   Deploying 'Verifier'
    --------------------
-   > transaction hash:    0x35ab1a26e6aac3ac1b947668e7fae21a559f475d4a3c3ffc67cdbf284ee12dc4
+   > transaction hash:    0x524c86cc28be68fcee4172d0d6934bc47841f21002c8aadc287cd4c7d8769a8b
    > Blocks: 1            Seconds: 13
-   > contract address:    0xb3B31A417ADFD9c42b4eB83fEED0a6197BC25841
-   > block number:        11213506
-   > block timestamp:     1660667739
+   > contract address:    0x1DE9D10209a7b091C024822862ebeFf558BcA6cb
+   > block number:        11212830
+   > block timestamp:     1660657578
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.193328339516348127
+   > balance:             0.486676738052298853
    > gas used:            992659 (0xf2593)
    > gas price:           25 gwei
    > value sent:          0 ETH
@@ -216,35 +216,35 @@ Starting migrations...
    Pausing for 1 confirmations...
 
    -------------------------------
-   > confirmation number: 1 (block: 11213507)
+   > confirmation number: 1 (block: 11212831)
 
-   Replacing 'SolnSquareVerifier'
+   Deploying 'SolnSquareVerifier'
    ------------------------------
-   > transaction hash:    0x6eefff3cc25fdd0b1da327f2562012baa7248f9845908c1478ed5ecdd9bafacd
-   > Blocks: 1            Seconds: 13
-   > contract address:    0xDcC6F1D97924E041D46AFC2D541A628c5a16B0c6
-   > block number:        11213508
-   > block timestamp:     1660667769
+   > transaction hash:    0xa0a721f9748734f3289aaae3ebdfb088d52771aa69975ec3014598c2ba36592c
+   > Blocks: 1            Seconds: 9
+   > contract address:    0x5Ad1D15196f73687bfb4f901fe4cDD0d0893150c
+   > block number:        11212832
+   > block timestamp:     1660657608
    > account:             0x27b5419afb9c3D99A262046383e083Ae7d81900a
-   > balance:             1.076078139516348127
-   > gas used:            4690008 (0x479058)
+   > balance:             0.370602338052298853
+   > gas used:            4642976 (0x46d8a0)
    > gas price:           25 gwei
    > value sent:          0 ETH
-   > total cost:          0.1172502 ETH
+   > total cost:          0.1160744 ETH
 
    Pausing for 1 confirmations...
 
    -------------------------------
-   > confirmation number: 1 (block: 11213509)
+   > confirmation number: 1 (block: 11212833)
    > Saving migration to chain.
    > Saving artifacts
    -------------------------------------
-   > Total cost:           0.2471643 ETH
+   > Total cost:           0.2447237 ETH
 
 Summary
 =======
 > Total deployments:   4
-> Final cost:          0.252827725 ETH
+> Final cost:          0.250387125 ETH
 
 ```
 
@@ -252,10 +252,11 @@ Summary
 
 Contract | Address | EtherScan Url
 ------- | ------- | -------
-SolnSquareVerifier | 0xDcC6F1D97924E041D46AFC2D541A628c5a16B0c6 | https://rinkeby.etherscan.io/address/0xDcC6F1D97924E041D46AFC2D541A628c5a16B0c6
+Migrations | 0xEa5dB3cbAE2FAD12D31c79dEAbB36E05F0b719D3 | https://rinkeby.etherscan.io/address/0xEa5dB3cbAE2FAD12D31c79dEAbB36E05F0b719D3
+CustomERC721Token | 0x21eE457239e167e1749E97A0A9a5d7E91839Ca1f | https://rinkeby.etherscan.io/address/0x21eE457239e167e1749E97A0A9a5d7E91839Ca1f
+Verifier | 0x1DE9D10209a7b091C024822862ebeFf558BcA6cb | https://rinkeby.etherscan.io/address/0x1DE9D10209a7b091C024822862ebeFf558BcA6cb
+SolnSquareVerifier | 0x5Ad1D15196f73687bfb4f901fe4cDD0d0893150c | https://rinkeby.etherscan.io/address/0x5Ad1D15196f73687bfb4f901fe4cDD0d0893150c
 
-
-ABI: [abi.json](./abi.json)
 
 ## Test address
 https://rinkeby.etherscan.io/address/0x27b5419afb9c3d99a262046383e083ae7d81900a
@@ -277,44 +278,47 @@ https://rinkeby.etherscan.io/address/0x27b5419afb9c3d99a262046383e083ae7d81900a
 Result folder: `results`
 
 
-`truffle test`
+`truffle test test/TestSquareVerifier.js --network rinkeby`
 
 ```bash
-Using network 'development'.
+Using network 'rinkeby'.
 
 
 Compiling your contracts...
 ===========================
-> Compiling ./contracts/ERC721Mintable.sol
-> Compiling ./contracts/SolnSquareVerifier.sol
-> Artifacts written to /var/folders/ns/wp1k8hz5079gx354pnqd65yc0000gn/T/test--15719-FdDtmnH5tkX5
-> Compiled successfully using:
-   - solc: 0.5.16+commit.9c3226ce.Emscripten.clang
+> Everything is up to date, there is nothing to compile.
 
-
-  Contract: TestERC721Mintable
-    match erc721 spec
-      ✔ should return total supply (67ms)
-      ✔ should get token balance (54ms)
-      ✔ should return token uri (279ms)
-      ✔ should transfer token from one owner to another (311ms)
-    have ownership properties
-      ✔ should fail when minting when address is not contract owner (147ms)
-      ✔ should return contract owner (55ms)
-
-  Contract: TestSolnSquareVerifier
-    Test if a new solution can be added for contract - SolnSquareVerifier
-      ✔ Test if a new solution can be added for contract - SolnSquareVerifier (1556ms)
-{ eventSolutionAddedEmitted: true }
-      ✔ Test if an ERC721 token can be minted for contract - SolnSquareVerifier (1477ms)
 
   Contract: TestSquareVerifier
     Test verification
-      ✔ verifyTx with correct proof (475ms)
-      ✔ verifyTx with incorrect proof (461ms)
+      ✔ verifyTx with correct proof (903ms)
+      ✔ verifyTx with incorrect proof (958ms)
 
 
-  10 passing (22s)
+  2 passing (32s)
+
+```
+
+
+`truffle test test/TestSolnSquareVerifier.js --network rinkeby`
+
+```bash
+Using network 'rinkeby'.
+
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+  Contract: TestSolnSquareVerifier
+    Test if a new solution can be added for contract - SolnSquareVerifier
+      ✔ Test if a new solution can be added for contract - SolnSquareVerifier (12733ms)
+{ eventSolutionAddedEmitted: true }
+      ✔ Test if an ERC721 token can be minted for contract - SolnSquareVerifier (14243ms)
+
+
+  2 passing (1m)
 
 ```
 
@@ -323,23 +327,12 @@ Compiling your contracts...
 [Create NFTs for Free on OpenSea](https://opensea.io/blog/announcements/introducing-the-collection-manager/)
 
 
-
-## Collection
-https://testnets.opensea.io/collection/nguyennam-realestate-marketplace-v3
-
-I IMPORT CORRECTLY CONTRACT ( 0xDcC6F1D97924E041D46AFC2D541A628c5a16B0c6 ) into OpenSea
-
-Steps:
-1. Follow this video to interact with Contract: https://www.youtube.com/watch?v=8MChn-NJJB0&ab_channel=AndresPinzon
-2. Minted
-3. Import minted contract into OpenSea
+Token:
+https://testnets.opensea.io/assets/rinkeby/0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656/17960453205314263712201193561424982636062403099346753433199048589817363300357/
 
 
-## NFT here:
-I created by "Create" button from OpenSea
-
+Collection
 https://testnets.opensea.io/collection/nguyen-nam-realestate-marketplace
-
 
 
 

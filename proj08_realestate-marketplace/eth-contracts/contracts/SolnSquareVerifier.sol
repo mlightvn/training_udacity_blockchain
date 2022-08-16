@@ -41,9 +41,8 @@ contract SolnSquareVerifier is CustomERC721Token {
     constructor(
         address _verifierContractAddress,
         string memory name,
-        string memory symbol,
-        string memory baseTokenURI
-    ) public CustomERC721Token(name, symbol, baseTokenURI) {
+        string memory symbol
+    ) public CustomERC721Token(name, symbol) {
         verifier = Verifier(_verifierContractAddress);
     }
 
