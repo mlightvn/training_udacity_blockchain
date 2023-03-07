@@ -8,6 +8,7 @@
   "repository": "https://github.com/techbubble/flightsurety",
   "license": "MIT",
   "scripts": {
+    "ganache": "ganache --wallet.seed \"merge property fence reform van what prize screen seek inner welcome velvet\"",
     "test": "truffle test",
     "test:flight": "truffle test ./test/flightSurety.js",
     "test:oracles": "truffle test ./test/oracles.js",
@@ -20,6 +21,7 @@
   },
   "author": "Nguyen Ngoc Nam <19430488+mlightvn@users.noreply.github.com> https://linktr.ee/mlight",
   "devDependencies": {
+    "ganache": "^7.7.6",
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.46",
